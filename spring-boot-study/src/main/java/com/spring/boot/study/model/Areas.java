@@ -57,7 +57,6 @@ public class Areas {
         this.fatherId = fatherId;
     }
 
-
     public Date getCreateTime() {
         return createTime;
     }
