@@ -16,7 +16,7 @@ public class Areas {
     private Integer fatherId;
 
     private Date createTime;
-
+    
     @JsonIgnore
     private Date updateTime;
 
