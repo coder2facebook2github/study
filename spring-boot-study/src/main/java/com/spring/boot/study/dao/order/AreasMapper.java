@@ -8,4 +8,6 @@ public interface AreasMapper {
     int insertSelective(Areas record);
 
     Areas getByName(String name);
+
+    Areas getById(String id);
 }

@@ -14,6 +14,9 @@
     <select id="getByName" parameterType="java.lang.String" resultType="com.spring.boot.study.model.Areas">
         select * from areas where name=#{name}
     </select>
+    <select id="getById" parameterType="java.lang.String" resultType="com.spring.boot.study.model.Areas">
+        select id, name, code from areas where id=#{id}
+    </select>
     <insert id="insert" parameterType="com.spring.boot.study.model.Areas">
     insert into areas (id, name, code, 
       level, father_id,

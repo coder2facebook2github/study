@@ -17,4 +17,8 @@ public class SysService {
         return areasMapper.getByName(name);
     }
 
+    public Areas getAreaById(String id) {
+        return areasMapper.getById(id);
+    }
+
 }
