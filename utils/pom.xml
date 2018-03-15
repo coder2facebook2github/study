@@ -147,8 +147,56 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+
 		</plugins>
+		<resources>
+			<resource>
+				<targetPath>${project.basedir}/src/main/java/com/utils</targetPath>
+				<filtering>true</filtering>
+				<directory>src/main/resources/filter/${deploy.env}</directory>
+				<includes>
+					<include>/utils.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>${project.basedir}/src/main/java/com</targetPath>
+				<filtering>true</filtering>
+				<directory>src/main/resources/filter/${deploy.env}</directory>
+				<includes>
+					<include>/welcome.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<!--<targetPath>${project.basedir}/src/main/webapp/WEB-INF/config</targetPath>-->
+				<filtering>true</filtering>
+				<directory>src/main/java/</directory>
+				<includes>
+					<!--<include>**/*.properties</include>-->
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
 
+		</resources>
 	</build>
-
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<deploy.env>release_config</deploy.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>snapshot</id>
+			<properties>
+				<deploy.env>snapshot_config</deploy.env>
+			</properties>
+		</profile>
+	</profiles>
 </project>

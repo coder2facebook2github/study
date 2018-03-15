@@ -1,6 +1,7 @@
 package com.spring.boot.study.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -15,8 +16,9 @@ public class Areas {
 
     private Integer fatherId;
 
+//    @JsonProperty("createAt")
     private Date createTime;
-    
+
     @JsonIgnore
     private Date updateTime;
 
