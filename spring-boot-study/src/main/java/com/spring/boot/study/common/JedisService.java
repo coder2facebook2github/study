@@ -1,5 +1,6 @@
 package com.spring.boot.study.common;
 
+import com.utils.ByteArrayHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -380,7 +381,7 @@ public class JedisService {
 					key.getBytes(), ByteArrayHelper.object2Bytes(member));
 		} catch (Exception e) {
 			LOGGER.error(e.getLocalizedMessage());
-			return -1l;
+			return -1L;
 		} finally {
 			jedis.close();
 		}

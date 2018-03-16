@@ -6,6 +6,7 @@ import com.spring.boot.study.common.JedisService;
 import com.spring.boot.study.model.Areas;
 import com.spring.boot.study.service.SysService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,8 @@ public class SysController {
     private SysService sysService;
     @Autowired
     private ConstantConfig constantConfig;
-    @Autowired
-    private JedisService jedisService;
+    @Value("${spring.hello.test}")
+    String test;
 
     @ResponseBody
     @RequestMapping(value = "/area/{id}", method = RequestMethod.GET)
@@ -43,13 +44,8 @@ public class SysController {
     public Map<String, Object> constantConfig() {
         Map<String, Object> result = new HashMap<>();
         result.put("constant", constantConfig);
+        System.out.println("test: " + test);
         return result;
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/redis/name")
-    public void redis(String name) {
-        jedisService.setStr("name", name);
     }
 
 }

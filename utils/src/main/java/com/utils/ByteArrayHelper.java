@@ -163,15 +163,17 @@ public class ByteArrayHelper {
             return null;
         }
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream outputStream;
+        ObjectOutputStream outputStream = null;
         try {
             outputStream = new ObjectOutputStream(arrayOutputStream);
             outputStream.writeObject(value);
+            outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
                 arrayOutputStream.close();
+                outputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

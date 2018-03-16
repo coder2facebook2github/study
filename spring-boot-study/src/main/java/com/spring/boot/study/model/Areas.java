@@ -3,9 +3,11 @@ package com.spring.boot.study.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Areas {
+public class Areas implements Serializable{
+    private static final long serialVersionUID = -3695253234801727491L;
     private Integer id;
 
     private String name;

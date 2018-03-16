@@ -10,22 +10,119 @@ import java.util.List;
 @ConfigurationProperties(prefix = "spring.constant")
 public class ConstantConfig {
 
-    private String name;
-    private List<String> urls;
+    private String welcomeWord;
+    private User user;
 
-    public String getName() {
-        return name;
+    public String getWelcomeWord() {
+        return welcomeWord;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWelcomeWord(String welcomeWord) {
+        this.welcomeWord = welcomeWord;
     }
 
-    public List<String> getUrls() {
-        return urls;
+    public User getUser() {
+        return user;
     }
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public static class User {
+        private String name;
+        private Integer age;
+        private Address address;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public Address getAddress() {
+            return address;
+        }
+
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    ", " + address +
+                    '}';
+        }
+    }
+
+    public static class Address {
+        private String province;
+        private String city;
+        private String area;
+        private String street;
+
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getProvince() {
+            return province;
+        }
+
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public String getArea() {
+            return area;
+        }
+
+        public void setArea(String area) {
+            this.area = area;
+        }
+
+        public String getStreet() {
+            return street;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
+        }
+
+        @Override
+        public String toString() {
+            return "Address{" +
+                    "province='" + province + '\'' +
+                    ", city='" + city + '\'' +
+                    ", area='" + area + '\'' +
+                    ", street='" + street + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ConstantConfig{" +
+                "welcomeWord='" + welcomeWord + '\'' +
+                ", " + user +
+                '}';
     }
 }
