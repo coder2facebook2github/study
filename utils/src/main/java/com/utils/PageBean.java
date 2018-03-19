@@ -1,6 +1,6 @@
 package com.utils;
 
-import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.IntervalFacet;
@@ -12,12 +12,10 @@ import java.util.*;
 
 /**
  * 与具体ORM实现无关的分页参数及查询结果封装.
- * 
- * @param <T>
- *            Page中记录的类型.
- * 
+ *
+ * @param <T> Page中记录的类型.
  */
-public class PageBean<T> implements Iterable<T>,Serializable {
+public class PageBean<T> implements Iterable<T>, Serializable {
     // -- 公共变量 --//
     public static final String ASC = "asc";
     public static final String DESC = "desc";
@@ -29,7 +27,9 @@ public class PageBean<T> implements Iterable<T>,Serializable {
     public int pageSize = 20;
     protected String orderBy = null;
     protected String order = null;
-    /** 总记录数 */
+    /**
+     * 总记录数
+     */
     public long totalItems = 0;
     public long allItems = 0;
     public long totalPages = 1;
@@ -60,12 +60,15 @@ public class PageBean<T> implements Iterable<T>,Serializable {
     public PageBean(int pageNo) {
         setPageNo(pageNo);
     }
+
     public PageBean(int pageNo, int pageSize) {
         setPageNo(pageNo);
         setPageSize(pageSize);
     }
 
-    /** 默认为id倒序的构造方法 */
+    /**
+     * 默认为id倒序的构造方法
+     */
     public PageBean(int pageNo, int pageSize, Map<String, Object> param) {
         setPageNo(pageNo);
         setPageSize(pageSize);
@@ -77,16 +80,11 @@ public class PageBean<T> implements Iterable<T>,Serializable {
     /**
      * 简便的生成Page
      *
-     * @param pageNo
-     *            当前页
-     * @param pageSize
-     *            每页显示多少条
-     * @param param
-     *            查询参数
-     * @param orderBy
-     *            根据哪列排序
-     * @param order
-     *            正序还是倒序
+     * @param pageNo   当前页
+     * @param pageSize 每页显示多少条
+     * @param param    查询参数
+     * @param orderBy  根据哪列排序
+     * @param order    正序还是倒序
      */
     public PageBean(int pageNo, int pageSize, Map<String, Object> param, String orderBy, String order) {
         setPageNo(pageNo);
@@ -170,6 +168,7 @@ public class PageBean<T> implements Iterable<T>,Serializable {
     }
 
     // -- 分页参数访问函数 --//
+
     /**
      * 获得当前页的页号,序号从1开始,默认为1.
      */
@@ -208,8 +207,9 @@ public class PageBean<T> implements Iterable<T>,Serializable {
 
     /**
      * 计算以当前页为中心的页面列表,如"首页,23,24,25,26,27,末页"
-     * 
-     *            需要计算的列表大小
+     * <p>
+     * 需要计算的列表大小
+     *
      * @return pageNo列表
      */
     public List<Long> getSlider() {
@@ -316,9 +316,8 @@ public class PageBean<T> implements Iterable<T>,Serializable {
 
     /**
      * 设置排序方式向.
-     * 
-     * @param order
-     *            可选值为desc或asc,多个排序字段时用','分隔.
+     *
+     * @param order 可选值为desc或asc,多个排序字段时用','分隔.
      */
     public void setOrder(final String order) {
         String lowcaseOrder = StringUtils.lowerCase(order);
@@ -400,9 +399,9 @@ public class PageBean<T> implements Iterable<T>,Serializable {
     public void setHighlighting(Map<String, Map<String, List<String>>> highlighting) {
         this.highlighting = highlighting;
     }
-    
-    public void addParam(String key,Object val) {
-        param.put(key,val);
+
+    public void addParam(String key, Object val) {
+        param.put(key, val);
     }
 
     public Object getParam(String key) {

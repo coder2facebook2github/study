@@ -8,9 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * @author ripflowers
- */
 public class DateUtils {
 
     public static final String YYYY_MM_DD = "yyyy-MM-dd";

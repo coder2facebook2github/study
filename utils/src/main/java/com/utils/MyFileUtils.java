@@ -16,7 +16,7 @@ public class MyFileUtils {
 	 * 
 	 * @param mf
 	 * @param path
-	 *            上传文件的路径
+	 *  上传文件的路径
 	 */
 	public static Map<String, String> upLoadFile(MultipartFile mf,
 			String path) {

@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
- * @author ripflowers
  * 提供高精度的运算支持. 所以函数以double为参数类型，兼容int与float.
  * 
  */

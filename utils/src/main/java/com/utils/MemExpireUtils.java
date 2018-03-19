@@ -3,9 +3,6 @@ package com.utils;
 import java.util.Date;
 import java.util.Random;
 
-/**
- * @author ripflowers
- */
 public class MemExpireUtils {
 
     private static final Random halfAnHourRandom = new Random();

@@ -30,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author ripflowers
- */
 public class HttpClientUtils {
 
     private static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);

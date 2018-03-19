@@ -18,9 +18,6 @@ import java.util.regex.Pattern;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
-/**
- * @author ripflowers
- */
 public class BaseUtils {
 
     private static final String UNCHECKED = "unchecked";

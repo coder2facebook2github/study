@@ -5,9 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Created by wangxin on 2014/11/5.
- */
 public class HttpUtils {
 
     public static void responseJsonp(HttpServletResponse response, String s, String jsonpCallback) throws IOException {

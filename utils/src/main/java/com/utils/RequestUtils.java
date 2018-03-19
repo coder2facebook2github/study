@@ -6,9 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author ripflowers
- */
 public class RequestUtils {
 
     private static final String phoneReg = "\\b(ip(hone|od)|android|opera m(ob|in)i"

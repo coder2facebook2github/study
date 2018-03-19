@@ -4,9 +4,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author ripflowers
- */
 public class CookieUtils {
 
     public static void addCookie(HttpServletResponse response, String key, String value, int expireTime) {

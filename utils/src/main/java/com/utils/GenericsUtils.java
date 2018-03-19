@@ -8,11 +8,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 泛型工具类
- * @author lihuoming
- *
- */
 @SuppressWarnings("unchecked")
 public class GenericsUtils {
 

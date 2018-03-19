@@ -3,9 +3,6 @@ package com.utils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * @author ripflowers
- */
 public class StackTraceUtils {
     private Throwable e;
 

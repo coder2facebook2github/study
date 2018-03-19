@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author ripflowers
- */
 public class StrUtils {
 
     public static Object byte2Object(byte[] bytes) {

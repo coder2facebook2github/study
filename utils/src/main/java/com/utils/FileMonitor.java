@@ -6,9 +6,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * @author ripflowers
- */
 public class FileMonitor {
     private static class FileMonitorTask extends TimerTask {
         private FileChangeListener listener;
