@@ -2,7 +2,6 @@ package com.spring.boot.study.controller;
 
 
 import com.spring.boot.study.common.ConstantConfig;
-import com.spring.boot.study.common.JedisService;
 import com.spring.boot.study.model.Areas;
 import com.spring.boot.study.service.SysService;
 import org.springframework.beans.factory.annotation.Autowired;

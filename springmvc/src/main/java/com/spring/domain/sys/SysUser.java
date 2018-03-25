@@ -1,5 +1,7 @@
 package com.spring.domain.sys;
 
+import com.alibaba.fastjson.support.spring.annotation.FastJsonFilter;
+
 import java.io.Serializable;
 import java.util.Date;
 

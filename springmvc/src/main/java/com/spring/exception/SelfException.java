@@ -1,8 +1,5 @@
 package com.spring.exception;
 
-/**
- * Created by Administrator on 2016/7/21.
- */
 public class SelfException extends RuntimeException {
     private String errorMessage;
 

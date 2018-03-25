@@ -28,21 +28,22 @@
 		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 		  p:defaultEncoding="utf-8"/>
 
+
+
 	<!-- jedis POOL配置 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<!--<property name="maxTotal" value="${redis.maxTotal}"/>-->
 		<!--<property name="maxIdle" value="${redis.maxIdle}"/>/-->
-		<!--<property name="maxWaitMillis" value="${redis.maxWait}"/>-->
-		<!--<property name="testOnBorrow" value="true"/>-->
 	</bean>
 
 	<bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool">
-		<constructor-arg index="0" value="mymaster"/>
+		<constructor-arg index="0" value="${redis.masterName}"/>
 		<constructor-arg index="1" value="#{'${redis.sentinel}'.split(',')}"/>
 		<constructor-arg index="2" ref="jedisPoolConfig"/>
+		<!--<constructor-arg index="3" value="${redis.passwd}"/>-->
 	</bean>
 
-	<bean id="jedisService" class="com.spring.service.impl.JedisServiceImpl">
+	<bean id="jedisService" class="com.utils.JedisService">
 		<property name="jedisPool" ref="jedisPool"/>
 	</bean>
 

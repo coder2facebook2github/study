@@ -1,6 +1,7 @@
 package com.spring.boot.study.common;
 
 
+import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,14 +26,12 @@ public class RedisConfig {
     }
 
     @Bean("jedisSentinelPool")
-    public JedisSentinelPool getJedisSentinelPool() {
-        JedisPoolConfig jedisPoolConfig = getJedisPoolConfig();
+    public JedisSentinelPool getJedisSentinelPool(JedisPoolConfig jedisPoolConfig) {
         return new JedisSentinelPool(masterName, redisSentinelNodes, jedisPoolConfig);
     }
 
     @Bean("JedisService")
-    public JedisService getJedisService() {
-        JedisSentinelPool jedisSentinelPool = getJedisSentinelPool();
+    public JedisService getJedisService(JedisSentinelPool jedisSentinelPool) {
         JedisService jedisService = new JedisService();
         jedisService.setJedisPool(jedisSentinelPool);
         return jedisService;

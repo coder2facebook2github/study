@@ -8,9 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
- * Created by Administrator on 2016/7/21.
- */
 @ControllerAdvice
 public class SelfExceptionHandler {
 

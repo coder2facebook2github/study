@@ -1,66 +1,61 @@
 package com.spring.web.sys;
 
-import com.alibaba.fastjson.JSONObject;
-import com.spring.comment.EnvironmentEnum;
 import com.spring.domain.sys.SysUser;
 import com.spring.exception.SelfException;
-import com.spring.service.JedisService;
 import com.spring.service.sys.SysUserService;
+import com.utils.JedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-/**
- * Created by Administrator on 2016/7/20.
- */
 @Controller
 public class LoginController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
-	@Autowired
-	private SysUserService sysUserService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    @Autowired
+    private SysUserService sysUserService;
 
-	@Autowired
-	private JedisService jedisService;
+    @Autowired
+    private JedisService jedisService;
+
+    @Value("${test_name}")
+    private String testName;
+
+    private static final String SYS_USER_LIST = "SYS_USER_LIST";
 
 
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String login() {
-		return "login";
-	}
+    @ResponseBody
+    @RequestMapping(value = "/welcome", method = RequestMethod.POST)
+    public Map<String, Object> welcome() {
+        Map<String, Object> data = new HashMap<String, Object>();
+        Map<String, Object> result = (Map<String, Object>) jedisService.get("userMap");
+        data.put("message", "Hello, " + result.get("name") + ", " + result.get("mobile"));
+        return data;
+    }
 
-	@ResponseBody
-	@RequestMapping(value = "/welcome", method = RequestMethod.POST)
-	public Map<String, Object> welcome() {
-		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> result = (Map<String, Object>)jedisService.get("userMap");
-		data.put("message", "Hello, " + result.get("name") + ", " + result.get("mobile"));
-		return data;
-	}
-
-	@RequestMapping(value = "/exception/test")
-	public String exceptionTest() {
-		System.out.println("--------exception");
-		if (1 == 1) {
-			throw new SelfException("空指针异常");
-		}
-		return "";
-	}
+    @RequestMapping(value = "/exception/test")
+    public String exceptionTest() {
+        System.out.println("--------exception");
+        if (1 == 1) {
+            throw new SelfException("空指针异常");
+        }
+        return "";
+    }
 
 //	@RequestMapping(value = "/register", method = RequestMethod.POST)
 //	public String register(User ywxUser, Model model) {
@@ -68,13 +63,11 @@ public class LoginController {
 //		return "redirect:user/list";
 //	}
 
-	@RequestMapping(value = "/user/list", method = RequestMethod.GET)
-	public String userList(Model model){
-		model.addAttribute("userList", sysUserService.queryAllUsers());
-		return "user/user_list";
-	}
-
-
+    @RequestMapping(value = "/user/list", method = RequestMethod.GET)
+    public String userList(Model model) {
+        model.addAttribute("userList", sysUserService.queryAllUsers());
+        return "user/user_list";
+    }
 
 
 //	@ResponseBody
@@ -89,17 +82,17 @@ public class LoginController {
 //		return result;
 //	}
 
-	@ResponseBody
-	@RequestMapping(value = "/get/user/info", method = RequestMethod.GET)
-	public Map<String, Object> getUserInfo(Long userId) {
-		if(userId == null) {
-			throw new SelfException("用户id为空");
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		SysUser user = sysUserService.getUserById(userId);
-		result.put("user", user);
-		return result;
-	}
+    @ResponseBody
+    @RequestMapping(value = "/get/user/info", method = RequestMethod.GET)
+    public Map<String, Object> getUserInfo(Long userId) {
+        if (userId == null) {
+            throw new SelfException("用户id为空");
+        }
+        Map<String, Object> result = new HashMap<String, Object>();
+        SysUser user = sysUserService.getUserById(userId);
+        result.put("user", user);
+        return result;
+    }
 
 //	@RequestMapping(value = "/user/modify", method = RequestMethod.POST)
 //	public String userModify(User user) {
@@ -158,17 +151,42 @@ public class LoginController {
 //		return result;
 //	}
 
-	@ResponseBody
-	@RequestMapping(value = "/redis/del", method = RequestMethod.POST)
-	public Map<String, Object> redisDel(String key) {
-		Map<String, Object> result = new HashMap<>();
-		long delCount = jedisService.del(key);
-		if(delCount <= 0){
-			result.put("message", false);
-			result.put("key", key);
-			return result;
-		}
-		result.put("message", true);
-		return result;
-	}
+    @ResponseBody
+    @RequestMapping(value = "/redis/del", method = RequestMethod.POST)
+    public Map<String, Object> redisDel(String key) {
+        Map<String, Object> result = new HashMap<>();
+        long delCount = jedisService.del(key);
+        if (delCount <= 0) {
+            result.put("message", false);
+            result.put("key", key);
+            return result;
+        }
+        result.put("message", true);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/get")
+    public Map<String, Object> redisGet(String key) {
+        Map<String, Object> result = new HashMap<>();
+        String redisValue = jedisService.getStr(key);
+        result.put(key, redisValue);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/set/sysUser/list")
+    public Map<String, Object> redisSet(@RequestBody List<SysUser> list, String hello) {
+        Map<String, Object> result = new HashMap<>();
+        for (SysUser user : list) {
+            jedisService.rpush(SYS_USER_LIST, user);
+        }
+        jedisService.setStr("name", testName);
+        jedisService.setStr("hello", hello);
+        List<SysUser> userList = jedisService.lrange(SYS_USER_LIST, 0, -1);
+        result.put("userList", userList);
+        result.put("message", "success");
+        result.put("name", jedisService.getStr("name"));
+        return result;
+    }
 }
