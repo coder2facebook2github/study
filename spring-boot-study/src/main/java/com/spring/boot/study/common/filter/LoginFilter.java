@@ -53,8 +53,8 @@ public class LoginFilter implements Filter {
                     return true;
                 }
             } else {
-                Pattern pattern = Pattern.compile("^(" + excludeUri.replaceAll("\\**$", "") + ")\\S$");
-                Matcher matcher = pattern.matcher(excludeUri);
+                Pattern pattern = Pattern.compile("^(" + excludeUri.replaceAll("\\**$", "") + ")\\S*$");
+                Matcher matcher = pattern.matcher(uri);
                 if(matcher.matches()) {
                     return true;
                 }

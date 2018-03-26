@@ -100,4 +100,6 @@ exclude:
     uri:
         - /constant/test
         - /redis/*
+        - /hello/test
+        - /login
 
