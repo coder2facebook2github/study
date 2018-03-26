@@ -4,6 +4,7 @@ package com.spring.boot.study.common;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -12,6 +13,15 @@ public class ConstantConfig {
 
     private String welcomeWord;
     private User user;
+    private List<String> comments = new ArrayList<>();
+
+    public List<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
 
     public String getWelcomeWord() {
         return welcomeWord;

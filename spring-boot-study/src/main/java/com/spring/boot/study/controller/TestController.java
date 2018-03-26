@@ -2,6 +2,7 @@ package com.spring.boot.study.controller;
 
 
 import com.spring.boot.study.common.ConstantConfig;
+import com.spring.boot.study.common.filter.FilterConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,11 @@ public class TestController {
 
     @Value("${spring.hello.test}")
     private String hello;
-
     @Autowired
     private ConstantConfig constantConfig;
+
+    @Autowired
+    private FilterConfiguration filterConfiguration;
 
     @ResponseBody
     @RequestMapping(value = "/hello/test")
@@ -38,6 +41,7 @@ public class TestController {
         Map<String, Object> result = new HashMap<>();
         System.out.println(constantConfig);
         result.put("config", constantConfig);
+        result.put("urls", filterConfiguration.getUri());
         return result;
     }
 

@@ -86,5 +86,18 @@ spring:
             age: 26
             name: zhangsan
         welcomeWord: 你好
+        comments:
+            - spring
+            - boot
+            - 2.0
+            - 明月
     hello:
         test: 床前明月光
+
+#不进行登陆验证的URI
+#不支持中间带 * 的匹配规则，如 /redis/*/get
+exclude:
+    uri:
+        - /constant/test
+        - /redis/*
+
