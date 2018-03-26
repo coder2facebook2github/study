@@ -2,12 +2,11 @@ package com.spring.boot.study.controller;
 
 
 import com.spring.boot.study.model.Areas;
+import com.spring.boot.study.model.vo.RedisSetVo;
 import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,34 @@ public class RedisController {
         }
         List<Areas> areasList = jedisService.lrange(AREAS_LIST, 0, -1);
         result.put("areasList", areasList);
+        result.put("message", "success");
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/set/string/{key}/{value}", method = RequestMethod.POST)
+    public Map<String, Object> redisSet(@PathVariable String key, @PathVariable String value) {
+        Map<String, Object> result = new HashMap<>();
+        jedisService.setStr(key, value);
+        result.put(key, value);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/set/body", method = RequestMethod.POST)
+    public Map<String, Object> redisSet1(@RequestBody RedisSetVo vo) {
+        Map<String, Object> result = new HashMap<>();
+        jedisService.setStr(vo.getKey(), vo.getValue());
+        result.put(vo.getKey(), vo.getValue());
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/redis/get/string/{key}")
+    public Map<String, Object> redisGet(@PathVariable String key) {
+        Map<String, Object> result = new HashMap<>();
+        String value = jedisService.getStr(key);
+        result.put(key, value);
         result.put("message", "success");
         return result;
     }
