@@ -3,13 +3,16 @@ server:
     port: 8880
     tomcat:
         uri-encoding: UTF-8
-#mybatis
+
+#mybatis配置
 mybatis:
     configuration:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#开启下划线与驼峰式命名规则的映射,如first_name => firstName
+        #开启下划线与驼峰式命名规则的映射,如first_name => firstName
         map-underscore-to-camel-case: true
+        #允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖
         use-generated-keys: false
+    #mapper.xml的位置
     mapper-locations: classpath:mapper/*.xml
 
 pagehelper:
@@ -17,6 +20,8 @@ pagehelper:
     params: count=countSql
     reasonable: true
     support-methods-arguments: true
+
+#redis配置
 redis:
     pool:
         config:
@@ -28,18 +33,19 @@ redis:
         nodes: localhost:26379
 
 spring:
+    #数据库连接信息
     datasource:
         driverClassName: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        password: root
+        username: root
         druid:
             initial-size: 5
             max-active: 10
             max-wait: 10000
             min-idle: 10
-        password: root
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-        username: root
-
+    #编码配置
     http:
         encoding:
             charset: UTF-8
@@ -47,9 +53,13 @@ spring:
             force: true
     messages:
         encoding: UTF-8
+    #jackson配置
     jackson:
+        #返回json数据时，对于时间的处理
         date-format: yyyy-MM-dd HH:mm:ss
+        #对于null值不序列化
         default-property-inclusion: non_null
+    #邮箱配置
     mail:
         host: smtp.163.com
         password: ''
@@ -65,6 +75,7 @@ spring:
                     starttls:
                         enable: true
         username: 18511717504@163.com
+    #常量配置
     constant:
         user:
             address:
