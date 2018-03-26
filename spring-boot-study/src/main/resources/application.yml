@@ -1,0 +1,79 @@
+#server配置
+server:
+    port: 8880
+    tomcat:
+        uri-encoding: UTF-8
+#mybatis
+mybatis:
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#开启下划线与驼峰式命名规则的映射,如first_name => firstName
+        map-underscore-to-camel-case: true
+        use-generated-keys: false
+    mapper-locations: classpath:mapper/*.xml
+
+pagehelper:
+    helper-dialect: mysql
+    params: count=countSql
+    reasonable: true
+    support-methods-arguments: true
+redis:
+    pool:
+        config:
+            maxIdle: 10
+            maxTotal: 12
+            minIdle: 0
+    sentinel:
+        master: mymaster
+        nodes: localhost:26379
+
+spring:
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        druid:
+            initial-size: 5
+            max-active: 10
+            max-wait: 10000
+            min-idle: 10
+        password: root
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        username: root
+
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    messages:
+        encoding: UTF-8
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        default-property-inclusion: non_null
+    mail:
+        host: smtp.163.com
+        password: ''
+        port: 25
+        properties:
+            mai:
+                smtp:
+                    starttls:
+                        required: true
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: 18511717504@163.com
+    constant:
+        user:
+            address:
+                area: 朝阳区
+                city: 北京市
+                province: 北京
+                street: 三间房
+            age: 26
+            name: zhangsan
+        welcomeWord: 你好
+    hello:
+        test: 床前明月光
