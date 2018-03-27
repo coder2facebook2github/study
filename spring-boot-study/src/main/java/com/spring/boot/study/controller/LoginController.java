@@ -1,7 +1,7 @@
 package com.spring.boot.study.controller;
 
 import com.spring.boot.study.model.vo.LoginVo;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

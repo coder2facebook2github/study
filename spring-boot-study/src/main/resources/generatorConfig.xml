@@ -9,66 +9,38 @@
 	<classPathEntry
 		location="C:\\Users\\hao\\.m2\\repository\\mysql\\mysql-connector-java\\6.0.6\\mysql-connector-java-6.0.6.jar" />
 
-	<context id="context1">
+	<context id="context1" targetRuntime="Mybatis3">
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->
 			<property name="suppressDate" value="false" /> <!-- 是否生成注释代时间戳 -->
 		</commentGenerator>
 		<!-- jdbc连接 -->
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
+			connectionURL="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true"
 			userId="root" password="root" />
 
 		<!-- 配置model的位置 -->
 		<javaModelGenerator targetPackage="com.spring.boot.study.model"
-			targetProject="src/main/java" />
-
+			targetProject="src/main/java">
+			<property name="trimString" value="true"/>
+		</javaModelGenerator>
 		<!-- 配置mapper.xml的位置 -->
 		<sqlMapGenerator targetPackage="mapper"
-			targetProject="src/main/java">
+						 targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
-	<!-- DAO 的位置 -->
+		<!-- DAO 的位置 -->
 		<javaClientGenerator targetPackage="com.spring.boot.study.dao.sys"
-			targetProject="src/main/java" type="XMLMAPPER" > <property name="enableSubPackags"
-			value="true" /> </javaClientGenerator>
+							 targetProject="src/main/java" type="XMLMAPPER" >
+			<property name="enableSubPackags" value="true" />
+		</javaClientGenerator>
+
 			<!-- 设置转换的表名 -->
-		<table schema="areas" tableName="areas"
-			enableCountByExample="false" domainObjectName="Areas"
+		<table tableName="sys_configurations"
+			enableCountByExample="false" domainObjectName="SysConfigurations"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
-		</table>
-		<table schema="sys_role" tableName="sys_role"
-			enableCountByExample="false" domainObjectName="SysRole"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
-		</table>
-		<table schema="sys_resource" tableName="sys_resource"
-			enableCountByExample="false" domainObjectName="SysResource"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
-		</table>
-		<table schema="sys_user" tableName="sys_user"
-			enableCountByExample="false" domainObjectName="SysUser"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
-		</table>
-		<table schema="sys_user_role" tableName="sys_user_role"
-			enableCountByExample="false" domainObjectName="SysUserRole"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
-		</table>
-		<table schema="sys_role_resource" tableName="sys_role_resource"
-			enableCountByExample="false" domainObjectName="SysRoleResource"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false">
-			<!-- <property name="useActualColumnNames" value="true"/> 如果数据是驼峰式规则则开启此项 -->
 		</table>
 
 	</context>

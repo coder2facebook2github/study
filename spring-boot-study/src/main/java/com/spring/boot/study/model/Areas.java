@@ -1,13 +1,8 @@
 package com.spring.boot.study.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 import java.util.Date;
 
-public class Areas implements Serializable{
-    private static final long serialVersionUID = -3695253234801727491L;
+public class Areas {
     private Integer id;
 
     private String name;
@@ -18,10 +13,8 @@ public class Areas implements Serializable{
 
     private Integer fatherId;
 
-//    @JsonProperty("createAt")
     private Date createTime;
 
-    @JsonIgnore
     private Date updateTime;
 
     public Integer getId() {
@@ -78,18 +71,5 @@ public class Areas implements Serializable{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Areas{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", level=" + level +
-                ", fatherId=" + fatherId +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
     }
 }

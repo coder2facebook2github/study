@@ -31,7 +31,7 @@ public class XmlUtils {
     public static String mapToXml(Map<String, String> map) {
         String xml = "<xml>";
         for (Map.Entry m : map.entrySet()) {
-            if (m.getValue() != null && org.apache.commons.lang.math.NumberUtils.isNumber(m.getValue().toString())) {
+            if (m.getValue() != null && org.apache.commons.lang3.math.NumberUtils.isCreatable(m.getValue().toString())) {
                 xml += "<" + m.getKey() + ">" + m.getValue() + "</" + m.getKey() + ">";
 
             } else

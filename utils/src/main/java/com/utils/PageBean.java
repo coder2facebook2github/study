@@ -1,7 +1,7 @@
 package com.utils;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.IntervalFacet;
 import org.apache.solr.client.solrj.response.QueryResponse;

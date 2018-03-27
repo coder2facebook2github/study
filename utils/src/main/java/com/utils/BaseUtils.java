@@ -3,7 +3,7 @@ package com.utils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +15,6 @@ import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class BaseUtils {
 
@@ -315,7 +313,7 @@ public class BaseUtils {
     }
 
     public static int parseInt(Object obj, int defaultVal) {
-        if (obj == null || isBlank(obj.toString())) {
+        if (obj == null || StringUtils.isBlank(obj.toString())) {
             return defaultVal;
         }
         try {
@@ -363,7 +361,7 @@ public class BaseUtils {
     }
 
     public static void setCookie(HttpServletResponse response, String name, String value, Integer expireTime) {
-        if (isBlank(name) || null == expireTime) {
+        if (StringUtils.isBlank(name) || null == expireTime) {
             return;
         }
         Cookie cookie = new Cookie(name, value);
@@ -399,7 +397,7 @@ public class BaseUtils {
      * toString no exception
      */
     public static String toString(Object obj, String defaultVal) {
-        if (obj == null || isBlank(obj.toString())) {
+        if (obj == null || StringUtils.isBlank(obj.toString())) {
             return defaultVal;
         }
         return obj.toString();
