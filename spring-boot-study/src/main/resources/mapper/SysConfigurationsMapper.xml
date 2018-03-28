@@ -8,7 +8,7 @@
     <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, key, value, delete_flag
+    `id`, `key`, `value`, `delete_flag`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

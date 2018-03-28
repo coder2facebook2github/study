@@ -18,7 +18,7 @@
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<commons-logging.version>1.2</commons-logging.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
-		<commons-io.version>2.5</commons-io.version>
+		<commons-io.version>2.6</commons-io.version>
 		<dbcp.version>1.4</dbcp.version>
 		<joda.version>2.4</joda.version>
 		<shiro.version>1.4.0</shiro.version>

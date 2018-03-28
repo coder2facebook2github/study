@@ -8,10 +8,10 @@
 <%@include file="common/nav.jsp" %>
 <div class="container">
 
-	<form class="form-signin">
+	<form class="form-signin" action="http://localhost:8880/get/validate/code" method="post" enctype="text/plain">
 		<h2 class="form-signin-heading">ERP管理平台</h2>
-		<input type="tel" id="mobile" class="form-control" placeholder="mobile" required autofocus>
-		<input type="password" id="password" class="form-control" placeholder="password" required>
+		<input type="tel" id="mobile" class="form-control" name="mobile" placeholder="mobile" required autofocus>
+		<input type="password" id="password" name="password" class="form-control" placeholder="password" required>
 		<button class="btn btn-lg btn-primary btn-block" type="submit">登 陆</button>
 		<div class="pull-right">
 			<a href="#">忘记密码?</a>
@@ -20,7 +20,7 @@
 
 </div>
 
-<
+
 <style type="text/css">
 	body {
 		padding-top: 40px;
