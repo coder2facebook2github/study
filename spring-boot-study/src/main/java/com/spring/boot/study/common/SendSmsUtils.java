@@ -1,5 +1,6 @@
 package com.spring.boot.study.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -9,19 +10,84 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.utils.JedisService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class SendSmsUtils {
 
     @Autowired
     private JedisService jedisService;
+    private String messageContent = "您的验证码是: $code，5分钟内有效，请勿泄露";
 
-    public void sendIdentifyCode(String mobile) throws ClientException {
-        this.sendMessage(mobile, Constants.SIGN_NAME, Constants.IDENTIFY_TEMPLATE_CODE,
-                RandomStringUtils.randomNumeric(6));
+    public void sendValidateCode(String mobile) throws ClientException {
+//        this.sendMessage(mobile, Constants.SIGN_NAME, Constants.IDENTIFY_TEMPLATE_CODE, getRandomCode(6));
+        String code = getRandomCode(6);
+        boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code));
+        if(sendSuccess) {
+            jedisService.setStr(Constants.MESSAGE_CODE + mobile, code);
+            System.out.println("mobile: " + mobile + ", code: " + code);
+        }
+    }
+
+    public boolean sendMessage(String mobile, String content) {
+        boolean result = false;
+        String url = jedisService.hget(Constants.SYS_CONFIGURATIONS, "send_message_api_url");
+        String privateKey = jedisService.hget(Constants.SYS_CONFIGURATIONS, "send_message_private_key");
+        Long businessType = Long.parseLong(jedisService.hget(Constants.SYS_CONFIGURATIONS, "send_message_business_type"));
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = null;
+        HttpPost httpPost = new HttpPost(url);
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("content", content + " 回TD退");
+        params.put("sms_type", "advertisement");
+        params.put("source", "web-api");
+        String dataJsonStr = JSONObject.toJSONString(params);
+        String sign = DigestUtils.md5Hex(dataJsonStr + privateKey);
+        JSONObject postJson = new JSONObject();
+        postJson.put("data", dataJsonStr);
+        postJson.put("business_type", businessType);
+        postJson.put("sign", sign);
+        String postString = postJson.toString();
+        System.out.println("postData: " + postString);
+        StringEntity stringEntity = new StringEntity(postString, StandardCharsets.UTF_8);
+        stringEntity.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        httpPost.setEntity(stringEntity);
+        HttpEntity responseEntity = null;
+        String httpResult = "";
+        try {
+            response = httpClient.execute(httpPost);
+            responseEntity = response.getEntity();
+            httpResult = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            CloseResource.closeHttpClient(httpClient, response);
+        }
+        if(response != null && response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
+            JSONObject httpJsonResult = JSONObject.parseObject(httpResult);
+            if(httpJsonResult.getIntValue("code") == 0) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     private String getRandomCode(int count) {

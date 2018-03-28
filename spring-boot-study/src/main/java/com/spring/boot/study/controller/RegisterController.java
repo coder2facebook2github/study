@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +35,14 @@ public class RegisterController {
     public Map<String, Object> register(@RequestBody SysUser user, String validateCode) {
         Map<String, Object> result = new HashMap<>();
         boolean checkCode = registerService.checkValidateCode(user.getMobile(), validateCode);
-        if(!checkCode) {
-            result.put("message", "验证吗错误");
+        Map<String, String> checkUser = registerService.validateUser(user);
+        if(!Constants.SUCCESS.equals(checkUser.get(Constants.MESSAGE))) {
+            result.put(Constants.MESSAGE, checkUser.get(Constants.MESSAGE));
+        } else if(!checkCode) {
+            result.put(Constants.MESSAGE, "验证码错误");
         } else {
             registerService.saveUser(user);
-            result.put("message", "注册成功");
+            result.put(Constants.MESSAGE, "注册成功");
         }
         return result;
     }
@@ -51,15 +52,15 @@ public class RegisterController {
     public Map<String, Object> getValidateCode(String mobile, HttpServletRequest request) throws IOException {
         Map<String, Object> result = new HashMap<>();
         if(StringUtils.isBlank(mobile)) {
-            result.put("message", "手机号为空");
+            result.put(Constants.MESSAGE, "手机号为空");
             return result;
         }
         try {
-            sendSmsUtils.sendIdentifyCode(mobile);
+            sendSmsUtils.sendValidateCode(mobile);
         } catch (ClientException e) {
             e.printStackTrace();
         }
-        result.put("message", "success");
+        result.put(Constants.MESSAGE, Constants.SUCCESS);
         return result;
     }
 }

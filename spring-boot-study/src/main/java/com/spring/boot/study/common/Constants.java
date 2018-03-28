@@ -17,4 +17,8 @@ public interface Constants {
      * 阿里大于 短信签名
      */
     String SIGN_NAME = "闪电";
+
+    String SUCCESS = "success";
+
+    String MESSAGE = "message";
 }

@@ -40,15 +40,16 @@ public class RegisterService {
     public Map<String, String> validateUser(SysUser user) {
         Map<String, String> result = new HashMap<>();
         if (user == null) {
-            result.put("message", "用户为空");
+            result.put(Constants.MESSAGE, "用户为空");
         } else if (StringUtils.isBlank(user.getMobile())) {
-            result.put("message", "手机号为空");
-        } else if (StringUtils.isBlank(user.getMobile())) {
-            result.put("message", "密码为空");
+            result.put(Constants.MESSAGE, "手机号为空");
+        } else if (StringUtils.isBlank(user.getPassword())) {
+            result.put(Constants.MESSAGE, "密码为空");
         } else if (StringUtils.isBlank(user.getEmail())) {
-            result.put("message", "邮箱为空");
+            result.put(Constants.MESSAGE, "邮箱为空");
+        } else {
+            result.put(Constants.MESSAGE, Constants.SUCCESS);
         }
-        result.put("message", "success");
         return result;
     }
 

@@ -1,12 +1,14 @@
 package com.spring.boot.study.common.servlet;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.dao.sys.SysConfigurationsMapper;
 import com.spring.boot.study.model.SysConfigurations;
 import com.utils.JedisService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -39,10 +41,13 @@ public class SysConfigInitServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+        if(!req.getContentType().contains(MediaType.APPLICATION_JSON_VALUE)) {
+            return;
+        }
         InputStream inputStream = req.getInputStream();
         String requestBody = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        String init = req.getParameter("init");
-        if ("true".equals(init)) {
+        boolean init = JSONObject.parseObject(requestBody).getBoolean("init");
+        if (init) {
             sysConfigInit();
         }
     }
