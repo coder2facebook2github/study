@@ -386,4 +386,17 @@ public class JedisService {
             jedis.close();
         }
     }
+
+    public long setExpiry(String key, int second) {
+        Jedis jedis = getJedisPool().getResource();
+        long result = 0;
+        try {
+            result = jedis.expire(key, second);
+        } catch (Exception e) {
+            LOGGER.error(e.getLocalizedMessage());
+        } finally {
+            jedis.close();
+        }
+        return result;
+    }
 }

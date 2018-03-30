@@ -11,6 +11,8 @@ public interface SysUserMapper {
 
     SysUser selectByPrimaryKey(Long id);
 
+    SysUser getByMobile(String mobile);
+
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);

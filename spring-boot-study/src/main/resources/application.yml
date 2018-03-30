@@ -98,8 +98,9 @@ spring:
 #不支持中间带 * 的匹配规则，如 /redis/*/get
 exclude:
     uri:
-        - /constant/test
         - /redis/*
         - /hello/test
         - /login
-
+token:
+    #登陆 token 有效时间
+    timeout: 300

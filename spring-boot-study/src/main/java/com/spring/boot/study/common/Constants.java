@@ -6,7 +6,15 @@ public interface Constants {
      */
     String MESSAGE_CODE = "MESSAGE_CODE:";
 
+    /**
+     * redis key 系统配置
+     */
     String SYS_CONFIGURATIONS = "SYS_CONFIGURATIONS";
+
+    /**
+     * redis key 用户token
+     */
+    String USER_TOKEN = "USER_TOKEN:";
 
     /**
      * 阿里大于 短信验证码template_code
@@ -21,4 +29,6 @@ public interface Constants {
     String SUCCESS = "success";
 
     String MESSAGE = "message";
+
+    String AUTHORIZATION = "Authorization";
 }

@@ -1,6 +1,12 @@
 package com.spring.boot.study.common.filter;
 
+import com.spring.boot.study.common.Constants;
+import com.spring.boot.study.common.LoginException;
+import com.spring.boot.study.service.LoginService;
+import com.utils.JedisService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -16,6 +22,13 @@ public class LoginFilter implements Filter {
     private Set<String> excludeUris;
     @Autowired
     private FilterConfiguration filterConfiguration;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private JedisService jedisService;
+    @Value("${token.timeout}")
+    private Integer timeout;
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,15 +39,32 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        String authorizationHeader = request.getHeader(Constants.AUTHORIZATION);
         String requestURI = request.getRequestURI().replaceAll("/+$", "")
                 .replaceAll("/+", "/");
         System.out.println(requestURI);
+        long userId = 0;
         if(checkExcludeUri(requestURI)) {
             System.out.println("无需验证登陆");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         } else {
-            
+            if(StringUtils.isBlank(authorizationHeader)) {
+                throw new LoginException("无权访问", 401);
+            }
+            try {
+                userId = loginService.parseJwt(authorizationHeader);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new LoginException("无权访问", 401);
+            }
+            try {
+                long lastTime = jedisService.get(Constants.USER_TOKEN + userId);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                throw new LoginException("登陆已过期，请重新登陆", 401);
+            }
+            jedisService.set(Constants.USER_TOKEN + userId, System.currentTimeMillis(), timeout);
         }
 
         System.out.println("登陆验证通过");
