@@ -77,12 +77,6 @@ public class LoginService {
         return secretKey;
     }
 
-    public static void main(String[] args) {
-        Base64.Decoder decoder = Base64.getDecoder();
-        System.out.println(new String(decoder.decode("eyJtb2JpbGUiOiIxODUxMTcxNzUwNCIsInVzZXJJZCI6MywiaWF0IjoxNTIyNDA2ODcxfQ")));
-        System.out.println(new String(decoder.decode("eyJhbGciOiJIUzI1NiJ9")));
-        System.out.println(new String(decoder.decode("5zGsNEycEMUjQhtccshmB6OPRy-8A0r7BuiTC3UXuXk")));
-    }
 
 
 
