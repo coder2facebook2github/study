@@ -1,7 +1,7 @@
 package com.spring.boot.study.common.filter;
 
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.common.LoginException;
+import com.spring.boot.study.common.exception.LoginException;
 import com.spring.boot.study.service.LoginService;
 import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;

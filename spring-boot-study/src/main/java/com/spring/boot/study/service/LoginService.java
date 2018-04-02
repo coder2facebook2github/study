@@ -7,6 +7,7 @@ import com.spring.boot.study.model.SysUser;
 import com.spring.boot.study.model.vo.LoginVo;
 import com.utils.JedisService;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.DefaultClaims;
 import io.netty.handler.codec.base64.Base64Decoder;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,8 @@ public class LoginService {
 
     public Long parseJwt(String jwtStr) {
         SecretKey secretKey = this.generateKey();
-        Object body = Jwts.parser().setSigningKey(secretKey).parse(jwtStr).getBody();
-        long userId = (long)((Map)body).get("userId");
+        DefaultClaims body = (DefaultClaims) Jwts.parser().setSigningKey(secretKey).parse(jwtStr).getBody();
+        long userId = body.get("userId", Long.class);
         return userId;
     }
 

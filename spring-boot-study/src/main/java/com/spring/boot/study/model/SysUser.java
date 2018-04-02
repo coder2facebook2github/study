@@ -1,10 +1,12 @@
 package com.spring.boot.study.model;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 public class SysUser {
     private Long id;
 
+    @NotBlank(message = "手机号不能为空")
     private String mobile;
 
     private String email;
