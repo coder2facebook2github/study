@@ -1,4 +1,4 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.exception;
 
 public class BootStudyException extends RuntimeException {
     private String errorMessage;

@@ -1,7 +1,5 @@
 package com.spring.boot.study.common.exception;
 
-import com.spring.boot.study.common.BootStudyException;
-
 public class LoginException extends BootStudyException {
     private String errorMessage;
     private int code;

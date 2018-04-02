@@ -3,6 +3,10 @@ server:
     port: 8880
     tomcat:
         uri-encoding: UTF-8
+    error:
+        #为了ErrorController里的得到 exception 对象 @See SelfExceptionHandlerResolver
+        include-exception: true
+        response-json-include-trace: false
 
 #mybatis配置
 mybatis:
@@ -101,6 +105,7 @@ exclude:
         - /redis/*
         - /hello/test
         - /login
+        - /favicon.ico
 token:
     #登陆 token 有效时间
-    timeout: 300
+    timeout: 1800
