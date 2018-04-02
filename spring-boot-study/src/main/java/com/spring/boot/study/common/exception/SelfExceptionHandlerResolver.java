@@ -140,18 +140,6 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
             errorParam.put(messages[0], messages[1]);
         }
 
-
-//        Set exceptions = exception.getConstraintViolations();
-//        ConstraintViolation exception0 = exceptions.
-//        try {
-//            Class controllerClass = constraintViolationImpl.getRootBeanClass();
-//            String methodName = constraintViolationImpl.getPropertyPath().toString().split("\\.")[0];
-//            Class[] paramTypes = ((PathImpl) ((ConstraintViolationImpl) constraintViolationImpl).getPropertyPath()).currentLeafNode.parent.parameterTypes;
-//            Method method = constraintViolationImpl.getRootBeanClass().getMethod(exception.getMessage(), String.class, String.class);
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        }
-
         return jsonResponseData(request, errorParam);
     }
 
