@@ -38,8 +38,6 @@ import java.util.*;
 
 /**
  * 通用错误处理器.
- *
- * @author Wang.ch
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -69,7 +67,12 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
      */
     @RequestMapping
     public ModelAndView handleApplicationJsonError(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return jsonResponseData(request, null);
+        Map<String, Object> modal = null;
+        if((int)request.getAttribute("javax.servlet.error.status_code") == HttpStatus.NOT_FOUND.value()) {
+            modal = new HashMap<>();
+            modal.put("errorMessage", "访问的资源不存在");
+        }
+        return jsonResponseData(request, modal);
     }
 
     /**
@@ -87,7 +90,11 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
         Map<String, Object> model = Collections.unmodifiableMap(super.getErrorAttributes(request, true));
         response.setStatus(status.value());
         ModelAndView modelAndView = this.resolveErrorView(request, response, status, model);
-        return modelAndView == null ? new ModelAndView("error", model) : modelAndView;
+        modelAndView = modelAndView == null ? new ModelAndView("error", model) : modelAndView;
+        if((int)request.getAttribute("javax.servlet.error.status_code") == HttpStatus.NOT_FOUND.value()) {
+            modelAndView.addObject("errorMessage", "访问的资源不存在");
+        }
+        return modelAndView;
     }
 
     private ModelAndView jsonResponseData(HttpServletRequest request, Map<String, Object> responseData) {
@@ -97,6 +104,7 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
         if(!includeTrace) {
             model.remove("trace");
         }
+
         if(responseData != null) {
             model.putAll(responseData);
         }
@@ -128,9 +136,17 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
         }
     }
 
+    /**
+     * 处理简单参数验证异常
+     * @param request
+     * @param response
+     * @param violationException
+     * @return
+     */
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ModelAndView ConstraintViolationExceptionHandler(HttpServletRequest request, HttpServletResponse response,
+    public ModelAndView ConstraintViolationExceptionHandler(HttpServletRequest request,
+                                                            HttpServletResponse response,
                                                            ConstraintViolationException violationException) {
         Map<String, Object> errorParam = new HashMap<>();
         Iterator iterator = violationException.getConstraintViolations().iterator();
@@ -139,29 +155,7 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
             String[] messages = exception.getMessage().split(":");
             errorParam.put(messages[0], messages[1]);
         }
-
         return jsonResponseData(request, errorParam);
-    }
-
-    /**
-     * 404的拦截.
-     *
-     * @param request
-     * @param response
-     * @param ex
-     * @return
-     * @throws Exception
-     */
-    @ResponseStatus(code = HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<?> notFound(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
-//        log.error("!!! request uri:{} from {} not found exception:{}", request.getRequestURI(), request.getRemoteHost(), ex.getMessage());
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        String msg = mapper.writeValueAsString(BaseResponse.newFail(BaseResponse.STATUS_BADREQUEST, "你访问的资源不存在"));
-        String msg = mapper.writeValueAsString("你访问的资源不存在");
-        handleJSONError(response, msg, HttpStatus.OK);
-        return null;
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
@@ -178,23 +172,17 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
 
     /**
      * 参数不完整错误.
-     *
-     * @param req
-     * @param rsp
-     * @param ex
-     * @return
-     * @throws Exception
      */
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public ModelAndView methodArgumentNotValidException(HttpServletRequest req, HttpServletResponse rsp, BindException ex) throws Exception {
+    public ModelAndView BindException(HttpServletRequest request, HttpServletResponse response, BindException ex) throws Exception {
         RequestMatcher matcher = new RequestMatcher("/**");
-        if (matcher.matches(req)) {
+        if (matcher.matches(request)) {
             BindingResult result = ex.getBindingResult();
             List<FieldError> fieldErrors = result.getFieldErrors();
             Map<String, Object> errorParam = new HashMap<>();
             fieldErrors.stream().forEach(fieldError -> errorParam.put(fieldError.getField(), fieldError.getDefaultMessage()));
-            return jsonResponseData(req, errorParam);
+            return jsonResponseData(request, errorParam);
         } else {
             throw ex;
         }
@@ -220,8 +208,11 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
 
     private <T extends Throwable> T getException(HttpServletRequest request) {
         T exception = (T)this.errorAttributes.getError(new ServletWebRequest(request));
-        exception.printStackTrace();
-        return exception;
+        if(exception != null) {
+            exception.printStackTrace();
+            return exception;
+        }
+        return null;
     }
 
     public HttpStatus getStatus(HttpServletRequest request, Exception exception) {

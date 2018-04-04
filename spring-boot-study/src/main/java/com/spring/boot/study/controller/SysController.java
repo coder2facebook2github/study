@@ -3,6 +3,7 @@ package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.ConstantConfig;
 import com.spring.boot.study.model.Areas;
+import com.spring.boot.study.model.SysUser;
 import com.spring.boot.study.service.SysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,15 @@ public class SysController {
         Map<String, Object> result = new HashMap<>();
         result.put("constant", constantConfig);
         System.out.println("test: " + test);
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/sys/user")
+    public Map<String, Object> userTest(SysUser user, String name) {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("user", user);
         return result;
     }
 

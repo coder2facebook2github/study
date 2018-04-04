@@ -1,5 +1,7 @@
 package com.spring.boot.study.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -11,8 +13,10 @@ public class SysUser {
 
     private String email;
 
+    @JsonIgnore
     private String salt;
 
+    @JsonIgnore
     private String password;
 
     private String nickname;
@@ -21,6 +25,7 @@ public class SysUser {
 
     private Date createTime;
 
+    @JsonIgnore
     private Date updateTime;
 
     public Long getId() {
