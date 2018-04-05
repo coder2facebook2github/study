@@ -2,7 +2,7 @@ package com.spring.boot.study.common.argument.resolver;
 
 import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.common.exception.LoginException;
-import com.spring.boot.study.dao.sys.SysUserDao;
+import com.spring.boot.study.dao.master.sys.SysUserDao;
 import com.spring.boot.study.model.SysUser;
 import com.spring.boot.study.service.LoginService;
 import org.apache.commons.lang3.StringUtils;

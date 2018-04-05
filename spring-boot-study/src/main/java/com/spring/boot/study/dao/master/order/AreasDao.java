@@ -1,4 +1,4 @@
-package com.spring.boot.study.dao.order;
+package com.spring.boot.study.dao.master.order;
 
 import com.spring.boot.study.model.Areas;
 

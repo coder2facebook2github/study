@@ -2,7 +2,7 @@ package com.spring.boot.study.service;
 
 
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.sys.SysUserDao;
+import com.spring.boot.study.dao.master.sys.SysUserDao;
 import com.spring.boot.study.model.SysUser;
 import com.utils.JedisService;
 import org.apache.commons.codec.digest.DigestUtils;

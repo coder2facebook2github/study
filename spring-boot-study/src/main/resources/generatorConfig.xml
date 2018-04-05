@@ -16,7 +16,7 @@
 		</commentGenerator>
 		<!-- jdbc连接 -->
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/spring?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true"
+			connectionURL="jdbc:mysql://localhost:3306/spring2?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true"
 			userId="root" password="root" />
 
 		<!-- 配置model的位置 -->
@@ -31,14 +31,14 @@
 		</sqlMapGenerator>
 
 		<!-- DAO 的位置 -->
-		<javaClientGenerator targetPackage="com.spring.boot.study.dao.sys"
+		<javaClientGenerator targetPackage="com.spring.boot.study.dao.slave_1.sys"
 							 targetProject="src/main/java" type="XMLMAPPER" >
 			<property name="enableSubPackags" value="true" />
 		</javaClientGenerator>
 
 			<!-- 设置转换的表名 -->
-		<table tableName="sys_configurations"
-			enableCountByExample="false" domainObjectName="SysConfigurations"
+		<table tableName="site_info"
+			enableCountByExample="false" domainObjectName="SiteInfo"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false">
 		</table>

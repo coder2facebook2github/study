@@ -27,7 +27,7 @@ public class ResourceGetController {
 //            File file = new File(path + "mapper/AreasDao.xml");
 //            bufferedReader = new BufferedReader(new FileReader(file));
             //jar里面的文件读取方式
-            InputStream inputStream = new ClassPathResource("mapper/AreasMapper.xml").getInputStream();
+            InputStream inputStream = new ClassPathResource("mapper/master/AreasMapper.xml").getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             System.out.println(bufferedReader.readLine() + "\n" + bufferedReader.readLine() + "\n" + bufferedReader.readLine());
             bufferedReader.close();

@@ -3,7 +3,7 @@ package com.spring.boot.study.common.servlet;
 
 import com.alibaba.fastjson.JSONObject;
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.sys.SysConfigurationsDao;
+import com.spring.boot.study.dao.master.sys.SysConfigurationsDao;
 import com.spring.boot.study.model.SysConfigurations;
 import com.utils.JedisService;
 import org.apache.commons.io.IOUtils;

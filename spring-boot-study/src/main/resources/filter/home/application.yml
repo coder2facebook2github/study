@@ -39,16 +39,28 @@ redis:
 spring:
     #数据库连接信息
     datasource:
-        driverClassName: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-        password: root
-        username: root
-        druid:
-            initial-size: 5
-            max-active: 10
-            max-wait: 10000
-            min-idle: 10
+        master:
+            driverClassName: com.mysql.jdbc.Driver
+            type: com.alibaba.druid.pool.DruidDataSource
+            url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+            password: root
+            username: root
+            druid:
+                initial-size: 5
+                max-active: 10
+                max-wait: 10000
+                min-idle: 10
+        slave_1:
+            driverClassName: com.mysql.jdbc.Driver
+            type: com.alibaba.druid.pool.DruidDataSource
+            url: jdbc:mysql://localhost:3306/spring2?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+            password: root
+            username: root
+            druid:
+                initial-size: 5
+                max-active: 10
+                max-wait: 10000
+                min-idle: 10
     #编码配置
     http:
         encoding:
