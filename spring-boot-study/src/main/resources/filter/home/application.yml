@@ -1,0 +1,111 @@
+#server配置
+server:
+    port: 8880
+    tomcat:
+        uri-encoding: UTF-8
+    error:
+        #为了ErrorController里的得到 exception 对象 @See SelfExceptionHandlerResolver
+        include-exception: true
+        response-json-include-trace: false
+
+#mybatis配置
+mybatis:
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        #开启下划线与驼峰式命名规则的映射,如first_name => firstName
+        map-underscore-to-camel-case: true
+        #允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖
+        use-generated-keys: false
+    #mapper.xml的位置
+    mapper-locations: classpath:mapper/*.xml
+
+pagehelper:
+    helper-dialect: mysql
+    params: count=countSql
+    reasonable: true
+    support-methods-arguments: true
+
+#redis配置
+redis:
+    pool:
+        config:
+            maxIdle: 10
+            maxTotal: 12
+            minIdle: 0
+    sentinel:
+        master: mymaster
+        nodes: localhost:26379
+
+spring:
+    #数据库连接信息
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+        password: root
+        username: root
+        druid:
+            initial-size: 5
+            max-active: 10
+            max-wait: 10000
+            min-idle: 10
+    #编码配置
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    messages:
+        encoding: UTF-8
+    #jackson配置
+    jackson:
+        #返回json数据时，对于时间的处理
+        date-format: yyyy-MM-dd HH:mm:ss
+        #对于null值不序列化
+        default-property-inclusion: non_null
+    #邮箱配置
+    mail:
+        host: smtp.163.com
+        password: ''
+        port: 25
+        properties:
+            mai:
+                smtp:
+                    starttls:
+                        required: true
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: 18511717504@163.com
+    #常量配置
+    constant:
+        user:
+            address:
+                area: 朝阳区
+                city: 北京市
+                province: 北京
+                street: 三间房
+            age: 26
+            name: zhangsan
+        welcomeWord: 你好
+        comments:
+            - spring
+            - boot
+            - 2.0
+            - 明月
+    hello:
+        test: 床前明月光home
+
+#不进行登陆验证的URI
+#不支持中间带 * 的匹配规则，如 /redis/*/get
+exclude:
+    uri:
+        - /redis/*
+        - /hello/test
+        - /login
+        - /favicon.ico
+token:
+    #登陆 token 有效时间
+    timeout: 1800

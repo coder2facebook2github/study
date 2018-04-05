@@ -179,8 +179,55 @@
                     </dependency>
                 </dependencies>
             </plugin>-->
-        </plugins>
-    </build>
 
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <!-- 不对rar和xls进行转码 -->
+                        <nonFilteredFileExtension>rar</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+        </plugins>
+
+
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources/</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources/filter/${deploy.env}</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+    <profiles>
+        <profile>
+            <id>home</id>
+            <properties>
+                <deploy.env>home</deploy.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>company</id>
+            <properties>
+                <deploy.env>company</deploy.env>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

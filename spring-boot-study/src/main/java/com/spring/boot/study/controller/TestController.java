@@ -35,6 +35,7 @@ public class TestController {
         result.put("唐诗", "枯藤老树昏鸦");
         result.put("constant", constantConfig);
         result.put("user", user);
+        result.put("filterConfiguration", filterConfiguration.getUri());
         return result;
     }
 
