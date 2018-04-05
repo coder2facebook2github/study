@@ -15,11 +15,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -97,24 +99,6 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
         return modelAndView;
     }
 
-    private ModelAndView jsonResponseData(HttpServletRequest request, Map<String, Object> responseData) {
-        Exception exception = this.getException(request);
-        HttpStatus status = this.getStatus(request, exception);
-        Map<String, Object> model = super.getErrorAttributes(request, true);
-        if(!includeTrace) {
-            model.remove("trace");
-        }
-
-        if(responseData != null) {
-            model.putAll(responseData);
-        }
-        ModelAndView jsonView = new ModelAndView();
-        jsonView.setView(new MappingJackson2JsonView());
-        jsonView.setStatus(status);
-        jsonView.addAllObjects(model);
-        return jsonView;
-    }
-
 
     /**
      * 500错误.
@@ -145,7 +129,7 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
      */
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ConstraintViolationException.class)
-    public ModelAndView ConstraintViolationExceptionHandler(HttpServletRequest request,
+    public ModelAndView constraintViolationExceptionHandler(HttpServletRequest request,
                                                             HttpServletResponse response,
                                                            ConstraintViolationException violationException) {
         Map<String, Object> errorParam = new HashMap<>();
@@ -164,13 +148,20 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
 
         return jsonResponseData(request,null);
     }
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ModelAndView httpMessageNotReadableException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
+        Map<String, Object> model = new HashMap<>();
+        model.put("errorMessage", "请求参数不是标准json格式");
+        return jsonResponseData(request,model);
+    }
 
     /**
      * 参数不完整错误.
      */
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(BindException.class)
-    public ModelAndView BindException(HttpServletRequest request, HttpServletResponse response, BindException ex) throws Exception {
+    @ExceptionHandler({BindException.class})
+    public ModelAndView bindException(HttpServletRequest request, HttpServletResponse response, BindException ex) throws Exception {
         RequestMatcher matcher = new RequestMatcher("/**");
         if (matcher.matches(request)) {
             BindingResult result = ex.getBindingResult();
@@ -183,16 +174,29 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
         }
     }
 
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ModelAndView methodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response, MethodArgumentNotValidException ex) throws Exception {
+        return bindException(request, response, new BindException(ex.getBindingResult()));
+    }
 
-    protected ModelAndView handleJSONError(HttpServletResponse rsp, String errorMessage, HttpStatus status) throws IOException {
-        rsp.setCharacterEncoding("UTF-8");
-        rsp.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        rsp.setStatus(status.value());
-        PrintWriter writer = rsp.getWriter();
-        writer.write(errorMessage);
-        writer.flush();
-        writer.close();
-        return null;
+
+    private ModelAndView jsonResponseData(HttpServletRequest request, Map<String, Object> responseData) {
+        Exception exception = this.getException(request);
+        HttpStatus status = this.getStatus(request, exception);
+        Map<String, Object> model = super.getErrorAttributes(request, true);
+        if(!includeTrace) {
+            model.remove("trace");
+        }
+
+        if(responseData != null) {
+            model.putAll(responseData);
+        }
+        ModelAndView jsonView = new ModelAndView();
+        jsonView.setView(new MappingJackson2JsonView());
+        jsonView.setStatus(status);
+        jsonView.addAllObjects(model);
+        return jsonView;
     }
 
     @Override

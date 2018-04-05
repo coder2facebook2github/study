@@ -38,10 +38,4 @@ public class RedisConfig {
         return jedisService;
     }
 
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor() {
-        return new MethodValidationPostProcessor();
-    }
-
-
 }

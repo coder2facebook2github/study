@@ -1,6 +1,5 @@
 package com.spring.boot.study.controller;
 
-
 import com.spring.boot.study.common.ConstantConfig;
 import com.spring.boot.study.common.filter.FilterConfiguration;
 import com.spring.boot.study.model.SysUser;
@@ -11,8 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,31 +38,9 @@ public class TestController {
         return result;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/constant/test")
-    public Map<String, Object> testConstantConfig(@Valid SysUser user) {
-        Map<String, Object> result = new HashMap<>();
-        System.out.println(constantConfig);
-        result.put("config", constantConfig);
-        result.put("urls", filterConfiguration.getUri());
-        return result;
-    }
-
     @RequestMapping(value = "/exception")
     public String test() {
         int a = 3 / 0;
         return "test";
     }
-
-    @RequestMapping(value = "/valid")
-    @ResponseBody
-    public Map<String, Object> testValid(@NotBlank(message = "name:名字不能为空") String name,
-                                         @NotBlank(message = "mobile:手机号不能为空") String mobile) {
-        Map<String, Object> result = new HashMap<>();
-
-
-        return result;
-    }
-
-
 }
