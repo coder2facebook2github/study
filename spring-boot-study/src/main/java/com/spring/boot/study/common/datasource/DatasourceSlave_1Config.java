@@ -16,11 +16,13 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.spring.boot.study.dao.slave_1", sqlSessionTemplateRef = "sqlSessionTemplateSlave_1")
+@MapperScan(basePackages = "com.spring.boot.study.dao.slave_1",
+        sqlSessionFactoryRef = "sqlSessionFactorySlave_1",
+        sqlSessionTemplateRef = "sqlSessionTemplateSlave_1")
 public class DatasourceSlave_1Config {
 
     @Bean("datasourceSlave_1")
-    @ConfigurationProperties("spring.datasource.slave_1")
+    @ConfigurationProperties("spring.datasource.slave1")
     public DataSource setDatasource() {
         return DruidDataSourceBuilder.create().build();
     }
@@ -30,17 +32,24 @@ public class DatasourceSlave_1Config {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    @Bean("mybatisConfig")
+    @ConfigurationProperties("mybatis.config")
+    public org.apache.ibatis.session.Configuration getMybatisConfiguration() {
+        return new org.apache.ibatis.session.Configuration();
+    }
+
     @Bean("sqlSessionFactorySlave_1")
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceSlave_1") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setConfiguration(this.getMybatisConfiguration());
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/slave_1/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     @Primary
     @Bean("sqlSessionTemplateSlave_1")
-    public SqlSessionTemplate setSqlSessionFactory(@Qualifier("sqlSessionFactorySlave_1") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("sqlSessionFactorySlave_1") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

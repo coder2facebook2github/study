@@ -1,6 +1,6 @@
 package com.spring.boot.study.dao.master.sys;
 
-import com.spring.boot.study.model.SysConfigurations;
+import com.spring.boot.study.model.master.SysConfigurations;
 
 import java.util.List;
 

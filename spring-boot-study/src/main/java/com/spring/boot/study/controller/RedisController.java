@@ -1,8 +1,8 @@
 package com.spring.boot.study.controller;
 
 
-import com.spring.boot.study.model.Areas;
-import com.spring.boot.study.model.vo.RedisSetVo;
+import com.spring.boot.study.model.master.Areas;
+import com.spring.boot.study.model.master.vo.RedisSetVo;
 import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

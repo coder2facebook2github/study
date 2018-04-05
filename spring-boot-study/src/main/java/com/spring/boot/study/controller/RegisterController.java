@@ -4,7 +4,7 @@ package com.spring.boot.study.controller;
 import com.aliyuncs.exceptions.ClientException;
 import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.common.SendSmsUtils;
-import com.spring.boot.study.model.SysUser;
+import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.service.RegisterService;
 import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;

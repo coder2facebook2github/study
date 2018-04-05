@@ -1,4 +1,4 @@
-package com.spring.boot.study.model.vo;
+package com.spring.boot.study.model.master.vo;
 
 import java.io.Serializable;
 

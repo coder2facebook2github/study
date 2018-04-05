@@ -1,6 +1,6 @@
 package com.spring.boot.study.dao.master.order;
 
-import com.spring.boot.study.model.Areas;
+import com.spring.boot.study.model.master.Areas;
 
 public interface AreasDao {
     int deleteByPrimaryKey(Integer id);

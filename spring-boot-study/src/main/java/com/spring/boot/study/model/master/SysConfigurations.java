@@ -1,4 +1,4 @@
-package com.spring.boot.study.model;
+package com.spring.boot.study.model.master;
 
 public class SysConfigurations {
     private Long id;

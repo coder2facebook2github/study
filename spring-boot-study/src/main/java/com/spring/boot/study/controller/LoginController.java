@@ -1,8 +1,8 @@
 package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.model.SysUser;
-import com.spring.boot.study.model.vo.LoginVo;
+import com.spring.boot.study.model.master.SysUser;
+import com.spring.boot.study.model.master.vo.LoginVo;
 import com.spring.boot.study.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

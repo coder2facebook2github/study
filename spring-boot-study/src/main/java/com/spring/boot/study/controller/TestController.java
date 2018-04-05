@@ -2,7 +2,7 @@ package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.ConstantConfig;
 import com.spring.boot.study.common.filter.FilterConfiguration;
-import com.spring.boot.study.model.SysUser;
+import com.spring.boot.study.model.master.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

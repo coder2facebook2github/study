@@ -1,13 +1,13 @@
-package com.spring.boot.study.model;
+package com.spring.boot.study.model.master;
 
 import java.util.Date;
 
-public class SysUserRole {
+public class SysRole {
     private Long id;
 
-    private Long userId;
+    private String name;
 
-    private Long roleId;
+    private String description;
 
     private Date createTime;
 
@@ -21,20 +21,20 @@ public class SysUserRole {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreateTime() {

@@ -1,6 +1,6 @@
 package com.spring.boot.study.dao.master.sys;
 
-import com.spring.boot.study.model.SysUserRole;
+import com.spring.boot.study.model.master.SysUserRole;
 
 public interface SysUserRoleDao {
     int deleteByPrimaryKey(Long id);

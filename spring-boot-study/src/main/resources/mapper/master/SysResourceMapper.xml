@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.boot.study.dao.master.sys.SysResourceDao">
-  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.SysResource">
+  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.master.SysResource">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="permission" jdbcType="VARCHAR" property="permission" />
@@ -21,13 +21,13 @@
     delete from sys_resource
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.spring.boot.study.model.SysResource">
+  <insert id="insert" parameterType="com.spring.boot.study.model.master.SysResource">
     insert into sys_resource (id, name, permission, 
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.spring.boot.study.model.SysResource">
+  <insert id="insertSelective" parameterType="com.spring.boot.study.model.master.SysResource">
     insert into sys_resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.SysResource">
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.master.SysResource">
     update sys_resource
     <set>
       <if test="name != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.SysResource">
+  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.master.SysResource">
     update sys_resource
     set name = #{name,jdbcType=VARCHAR},
       permission = #{permission,jdbcType=VARCHAR},

@@ -3,8 +3,8 @@ package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.ValidateGroup.group.GroupA;
 import com.spring.boot.study.common.ValidateGroup.group.GroupB;
-import com.spring.boot.study.model.vo.RedisSetVo;
-import com.spring.boot.study.model.vo.RegisterVo;
+import com.spring.boot.study.model.master.vo.RedisSetVo;
+import com.spring.boot.study.model.master.vo.RegisterVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;

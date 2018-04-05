@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.boot.study.dao.master.sys.SysRoleDao">
-  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.SysRole">
+  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.master.SysRole">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -21,13 +21,13 @@
     delete from sys_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.spring.boot.study.model.SysRole">
+  <insert id="insert" parameterType="com.spring.boot.study.model.master.SysRole">
     insert into sys_role (id, name, description, 
       create_time, update_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.spring.boot.study.model.SysRole">
+  <insert id="insertSelective" parameterType="com.spring.boot.study.model.master.SysRole">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.SysRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.master.SysRole">
     update sys_role
     <set>
       <if test="name != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.SysRole">
+  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.master.SysRole">
     update sys_role
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},

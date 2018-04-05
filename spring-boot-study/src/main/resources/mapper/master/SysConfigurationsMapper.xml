@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.boot.study.dao.master.sys.SysConfigurationsDao">
-  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.SysConfigurations">
+  <resultMap id="BaseResultMap" type="com.spring.boot.study.model.master.SysConfigurations">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="key" jdbcType="VARCHAR" property="key" />
     <result column="value" jdbcType="VARCHAR" property="value" />
@@ -26,13 +26,13 @@
     delete from sys_configurations
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.spring.boot.study.model.SysConfigurations">
+  <insert id="insert" parameterType="com.spring.boot.study.model.master.SysConfigurations">
     insert into sys_configurations (id, key, value, 
       delete_flag)
     values (#{id,jdbcType=BIGINT}, #{key,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
       #{deleteFlag,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.spring.boot.study.model.SysConfigurations">
+  <insert id="insertSelective" parameterType="com.spring.boot.study.model.master.SysConfigurations">
     insert into sys_configurations
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -63,7 +63,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.SysConfigurations">
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.boot.study.model.master.SysConfigurations">
     update sys_configurations
     <set>
       <if test="key != null">
@@ -78,7 +78,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.SysConfigurations">
+  <update id="updateByPrimaryKey" parameterType="com.spring.boot.study.model.master.SysConfigurations">
     update sys_configurations
     set key = #{key,jdbcType=VARCHAR},
       value = #{value,jdbcType=VARCHAR},

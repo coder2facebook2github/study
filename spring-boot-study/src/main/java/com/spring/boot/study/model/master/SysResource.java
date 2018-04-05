@@ -1,13 +1,13 @@
-package com.spring.boot.study.model;
+package com.spring.boot.study.model.master;
 
 import java.util.Date;
 
-public class SysRole {
+public class SysResource {
     private Long id;
 
     private String name;
 
-    private String description;
+    private String permission;
 
     private Date createTime;
 
@@ -29,12 +29,12 @@ public class SysRole {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPermission() {
+        return permission;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public Date getCreateTime() {

@@ -1,6 +1,6 @@
 package com.spring.boot.study.dao.master.sys;
 
-import com.spring.boot.study.model.SysResource;
+import com.spring.boot.study.model.master.SysResource;
 
 public interface SysResourceDao {
     int deleteByPrimaryKey(Long id);

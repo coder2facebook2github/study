@@ -10,14 +10,14 @@ server:
 
 #mybatis配置
 mybatis:
-    configuration:
-        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    config:
+        logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
         #开启下划线与驼峰式命名规则的映射,如first_name => firstName
-        map-underscore-to-camel-case: true
+        mapUnderscoreToCamelCase: true
         #允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖
-        use-generated-keys: false
+        useGeneratedKeys: false
     #mapper.xml的位置
-    mapper-locations: classpath:mapper/*.xml
+#    mapper-locations: classpath:mapper/*.xml
 
 pagehelper:
     helper-dialect: mysql
@@ -50,7 +50,7 @@ spring:
                 max-active: 10
                 max-wait: 10000
                 min-idle: 10
-        slave_1:
+        slave1:
             driverClassName: com.mysql.jdbc.Driver
             type: com.alibaba.druid.pool.DruidDataSource
             url: jdbc:mysql://localhost:3306/spring2?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true

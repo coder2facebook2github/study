@@ -1,6 +1,6 @@
 package com.spring.boot.study.dao.master.sys;
 
-import com.spring.boot.study.model.SysUser;
+import com.spring.boot.study.model.master.SysUser;
 
 public interface SysUserDao {
     int deleteByPrimaryKey(Long id);

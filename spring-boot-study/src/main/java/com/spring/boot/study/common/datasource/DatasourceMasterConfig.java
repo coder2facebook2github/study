@@ -16,7 +16,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.spring.boot.study.dao.master", sqlSessionTemplateRef = "sqlSessionTemplateMaster")
+@MapperScan(basePackages = "com.spring.boot.study.dao.master",
+        sqlSessionFactoryRef = "sqlSessionFactoryMaster",
+        sqlSessionTemplateRef = "sqlSessionTemplateMaster")
 public class DatasourceMasterConfig {
 
     @Primary
@@ -32,21 +34,27 @@ public class DatasourceMasterConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    @Bean("mybatisConfig")
+    @ConfigurationProperties("mybatis.config")
+    public org.apache.ibatis.session.Configuration getMybatisConfiguration() {
+        return new org.apache.ibatis.session.Configuration();
+    }
+
     @Primary
     @Bean("sqlSessionFactoryMaster")
     public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceMaster") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/master/*.xml"));
+        sqlSessionFactoryBean.setConfiguration(this.getMybatisConfiguration());
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
+                .getResources("classpath:mapper/master/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
     @Primary
     @Bean("sqlSessionTemplateMaster")
-    public SqlSessionTemplate setSqlSessionFactory(@Qualifier("sqlSessionFactoryMaster") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate setSqlSessionTemplate(@Qualifier("sqlSessionFactoryMaster") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
-
 
 }
