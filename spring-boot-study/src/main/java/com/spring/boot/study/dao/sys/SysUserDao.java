@@ -2,7 +2,7 @@ package com.spring.boot.study.dao.sys;
 
 import com.spring.boot.study.model.SysUser;
 
-public interface SysUserMapper {
+public interface SysUserDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(SysUser record);

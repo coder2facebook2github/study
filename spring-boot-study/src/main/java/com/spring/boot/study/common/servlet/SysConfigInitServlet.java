@@ -3,7 +3,7 @@ package com.spring.boot.study.common.servlet;
 
 import com.alibaba.fastjson.JSONObject;
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.sys.SysConfigurationsMapper;
+import com.spring.boot.study.dao.sys.SysConfigurationsDao;
 import com.spring.boot.study.model.SysConfigurations;
 import com.utils.JedisService;
 import org.apache.commons.io.IOUtils;
@@ -28,7 +28,7 @@ public class SysConfigInitServlet extends HttpServlet {
     @Autowired
     private JedisService jedisService;
     @Autowired
-    private SysConfigurationsMapper sysConfigurationsMapper;
+    private SysConfigurationsDao sysConfigurationsDao;
 
 
     @Override
@@ -53,7 +53,7 @@ public class SysConfigInitServlet extends HttpServlet {
     }
 
     private void sysConfigInit() {
-        List<SysConfigurations> sysConfigurationList = sysConfigurationsMapper.getAllUsedConfigurations();
+        List<SysConfigurations> sysConfigurationList = sysConfigurationsDao.getAllUsedConfigurations();
         if (sysConfigurationList != null && sysConfigurationList.size() > 0) {
             for (SysConfigurations sysConfiguration : sysConfigurationList) {
                 jedisService.hset(Constants.SYS_CONFIGURATIONS, sysConfiguration.getKey(),

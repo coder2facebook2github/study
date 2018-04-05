@@ -160,14 +160,9 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(LoginException.class)
-    public ResponseEntity<?> loginException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
-//        log.error("!!! request uri:{} from {} not found exception:{}", request.getRequestURI(), request.getRemoteHost(), ex.getMessage());
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-//        String msg = mapper.writeValueAsString(BaseResponse.newFail(BaseResponse.STATUS_BADREQUEST, "你访问的资源不存在"));
-        String msg = mapper.writeValueAsString(ex.getMessage());
-        handleJSONError(response, msg, HttpStatus.OK);
-        return null;
+    public ModelAndView loginException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
+
+        return jsonResponseData(request,null);
     }
 
     /**

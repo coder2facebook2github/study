@@ -2,7 +2,7 @@ package com.spring.boot.study.dao.order;
 
 import com.spring.boot.study.model.Areas;
 
-public interface AreasMapper {
+public interface AreasDao {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Areas record);

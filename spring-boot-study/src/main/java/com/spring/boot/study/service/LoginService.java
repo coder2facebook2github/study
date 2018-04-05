@@ -2,13 +2,12 @@ package com.spring.boot.study.service;
 
 
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.sys.SysUserMapper;
+import com.spring.boot.study.dao.sys.SysUserDao;
 import com.spring.boot.study.model.SysUser;
 import com.spring.boot.study.model.vo.LoginVo;
 import com.utils.JedisService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultClaims;
-import io.netty.handler.codec.base64.Base64Decoder;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +22,7 @@ import java.util.Map;
 @Service
 public class LoginService {
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private SysUserDao sysUserDao;
     @Autowired
     private JedisService jedisService;
     @Value("${token.timeout}")
@@ -33,7 +31,7 @@ public class LoginService {
 
     public Map<String, Object> validateUser(LoginVo loginVo) {
         Map<String, Object> result = new HashMap<>();
-        SysUser sysUser = sysUserMapper.getByMobile(loginVo.getUsername());
+        SysUser sysUser = sysUserDao.getByMobile(loginVo.getUsername());
         if (sysUser == null) {
             result.put(Constants.MESSAGE, "用户不存在");
         } else {

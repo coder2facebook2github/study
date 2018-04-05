@@ -4,7 +4,7 @@ import com.spring.boot.study.model.SysConfigurations;
 
 import java.util.List;
 
-public interface SysConfigurationsMapper {
+public interface SysConfigurationsDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(SysConfigurations record);

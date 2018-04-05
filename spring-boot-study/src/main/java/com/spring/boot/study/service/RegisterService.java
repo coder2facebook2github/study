@@ -2,7 +2,7 @@ package com.spring.boot.study.service;
 
 
 import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.sys.SysUserMapper;
+import com.spring.boot.study.dao.sys.SysUserDao;
 import com.spring.boot.study.model.SysUser;
 import com.utils.JedisService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class RegisterService {
 
     @Autowired
-    private SysUserMapper sysUserMapper;
+    private SysUserDao sysUserDao;
     @Autowired
     private JedisService jedisService;
 
@@ -26,7 +26,7 @@ public class RegisterService {
         user.setSalt(RandomStringUtils.randomAlphabetic(10));
         String password = DigestUtils.md5Hex(user.getPassword() + user.getSalt());
         user.setPassword(password);
-        return sysUserMapper.insertSelective(user);
+        return sysUserDao.insertSelective(user);
     }
 
     public boolean checkValidateCode(String mobile, String code) {

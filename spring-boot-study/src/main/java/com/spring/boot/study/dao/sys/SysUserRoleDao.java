@@ -2,7 +2,7 @@ package com.spring.boot.study.dao.sys;
 
 import com.spring.boot.study.model.SysUserRole;
 
-public interface SysUserRoleMapper {
+public interface SysUserRoleDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(SysUserRole record);
