@@ -3,7 +3,9 @@ package com.spring.boot.study.service;
 
 import com.spring.boot.study.dao.master.order.AreasDao;
 import com.spring.boot.study.dao.master.sys.SysUserDao;
+import com.spring.boot.study.dao.slave_1.sys.SiteInfoDao;
 import com.spring.boot.study.dao.slave_1.sys.SysUserSlave1Dao;
+import com.spring.boot.study.model.SiteInfo;
 import com.spring.boot.study.model.master.Areas;
 import com.spring.boot.study.model.master.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class SysService {
 
     @Autowired
     private SysUserSlave1Dao sysUserSlave1Dao;
+    @Autowired
+    private SiteInfoDao siteInfoDao;
 
     @Transactional
     public Areas getAreaByName(String name) {
@@ -33,13 +37,17 @@ public class SysService {
         return areasDao.getById(id);
     }
 
-    public Map<String, Object> getByMobile(String mobile) {
+    public Map<String, Object> getUserByMobile(String mobile) {
         SysUser masterUser = sysUserDao.getByMobile(mobile);
         SysUser slaveUser = sysUserSlave1Dao.getByMobile(mobile);
         Map<String, Object> users = new HashMap<>();
         users.put("masterUser", masterUser);
         users.put("slaveUser", slaveUser);
         return users;
+    }
+
+    public SiteInfo getSiteInfoById(long id) {
+        return siteInfoDao.selectByPrimaryKey(id);
     }
 
 }
