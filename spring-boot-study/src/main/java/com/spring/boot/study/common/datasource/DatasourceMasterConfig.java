@@ -36,19 +36,19 @@ public class DatasourceMasterConfig {
         return new DataSourceTransactionManager(dataSource);
     }
 
+    @Bean("mybatisConfigurationMaster")
+    @ConfigurationProperties("mybatis.config")
+    public org.apache.ibatis.session.Configuration getMybatisConfig() {
+        return new org.apache.ibatis.session.Configuration();
+    }
+
     @Primary
     @Bean("sqlSessionFactoryMaster")
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceMaster") DataSource dataSource) throws Exception {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceMaster") DataSource dataSource,
+                                                  @Qualifier("mybatisConfigurationMaster")org.apache.ibatis.session.Configuration mybatisConfig) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        org.apache.ibatis.session.Configuration mybatisConfiguration = new org.apache.ibatis.session.Configuration();
-        //开启下划线与驼峰式命名规则的映射,如first_name => firstName
-        mybatisConfiguration.setMapUnderscoreToCamelCase(true);
-        //开启sql打印
-        mybatisConfiguration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
-        //允许使用自定义的主键值(比如由程序生成的UUID 32位编码作为键值)，数据表的PK生成策略将被覆盖
-        mybatisConfiguration.setUseGeneratedKeys(false);
-        sqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
+        sqlSessionFactoryBean.setConfiguration(mybatisConfig);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath:mapper/master/*.xml"));
         return sqlSessionFactoryBean.getObject();

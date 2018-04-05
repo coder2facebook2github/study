@@ -34,17 +34,18 @@ public class DatasourceSlave_1Config {
         return new DataSourceTransactionManager(dataSource);
     }
 
-
+    @Bean("mybatisConfigurationSlave_1")
+    @ConfigurationProperties("mybatis.config")
+    public org.apache.ibatis.session.Configuration getMybatisConfig() {
+        return new org.apache.ibatis.session.Configuration();
+    }
 
     @Bean("sqlSessionFactorySlave_1")
-    public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceSlave_1") DataSource dataSource) throws Exception {
+    public SqlSessionFactory setSqlSessionFactory(@Qualifier("datasourceSlave_1") DataSource dataSource,
+                                                  @Qualifier("mybatisConfigurationSlave_1")org.apache.ibatis.session.Configuration mybatisConfig) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        org.apache.ibatis.session.Configuration mybatisConfiguration = new org.apache.ibatis.session.Configuration();
-        mybatisConfiguration.setMapUnderscoreToCamelCase(true);
-        mybatisConfiguration.setLogImpl(org.apache.ibatis.logging.stdout.StdOutImpl.class);
-        mybatisConfiguration.setUseGeneratedKeys(false);
-        sqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
+        sqlSessionFactoryBean.setConfiguration(mybatisConfig);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/slave_1/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
