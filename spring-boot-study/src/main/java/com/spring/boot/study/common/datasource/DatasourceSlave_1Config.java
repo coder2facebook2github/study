@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableConfigurationProperties
 @MapperScan(basePackages = "com.spring.boot.study.dao.slave_1",
         sqlSessionFactoryRef = "sqlSessionFactorySlave_1",
         sqlSessionTemplateRef = "sqlSessionTemplateSlave_1")
