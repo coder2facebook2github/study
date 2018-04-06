@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-@ServletComponentScan
+@ServletComponentScan(basePackages = "com.spring.boot.study.common.servlet")
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class StudyApplication implements WebMvcConfigurer {
 

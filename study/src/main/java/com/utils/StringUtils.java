@@ -9,16 +9,13 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
 
-    public static void main(String... args) throws UnsupportedEncodingException {
-//		SimpleHash simpleHash = new SimpleHash("md5", "abc", "a");
-//
-//		System.out.println(simpleHash.toHex());
-//
-//		System.out.println(DigestUtils.md5Hex("abc"));
+    public static void main(String[] args) {
+        int a = 'M';
+        int b = 'Y';
+        int c = 'A';
+        System.out.println(a);
+        System.out.println(c -64);
 
-        String str = "北京市";
-
-        System.out.println(str.replace("市", ""));
-
+        System.out.println((a + b - 64 - 64) * (b - a));
     }
 }

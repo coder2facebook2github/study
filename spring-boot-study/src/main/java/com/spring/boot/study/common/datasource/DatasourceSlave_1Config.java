@@ -33,7 +33,7 @@ public class DatasourceSlave_1Config {
     }
 
     @Bean("mybatisConfigurationSlave_1")
-    @ConfigurationProperties("mybatis.config")
+    @ConfigurationProperties("mybatis-slave1.config")
     public org.apache.ibatis.session.Configuration getMybatisConfig() {
         return new org.apache.ibatis.session.Configuration();
     }
