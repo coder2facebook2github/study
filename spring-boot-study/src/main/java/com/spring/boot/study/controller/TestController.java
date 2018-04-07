@@ -26,15 +26,21 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "/hello/test")
-    public Map<String, Object> test(String name, SysUser user) {
+    public Map<String, Object> test(String name) {
         Map<String, Object> result = new HashMap<>();
         result.put("name", name);
         result.put("hello", hello);
         result.put("唐诗", "枯藤老树昏鸦");
         result.put("constant", constantConfig);
-        result.put("user", user);
+//        result.put("user", user);
         result.put("filterConfiguration", filterConfiguration.getUri());
         return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/")
+    public String test2() {
+        return "余文馨是大笨妞";
     }
 
     @RequestMapping(value = "/exception")

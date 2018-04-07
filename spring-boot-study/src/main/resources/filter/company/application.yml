@@ -124,9 +124,10 @@ spring:
 exclude:
     uri:
         - /redis/*
+        - /
         - /hello/test
         - /login
         - /favicon.ico
 token:
     #登陆 token 有效时间
-    timeout: 1800
+    timeout: 3600

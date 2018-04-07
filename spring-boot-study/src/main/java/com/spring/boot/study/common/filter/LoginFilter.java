@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
                 .replaceAll("/+", "/");
         System.out.println(requestURI);
         long userId = 0;
-        if(checkExcludeUri(requestURI)) {
+        if("".equalsIgnoreCase(requestURI) || checkExcludeUri(requestURI)) {
             System.out.println("无需验证登陆");
             filterChain.doFilter(servletRequest, servletResponse);
             return;

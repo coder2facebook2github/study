@@ -1,6 +1,6 @@
 #server配置
 server:
-    port: 8880
+    port: 1230
     tomcat:
         uri-encoding: UTF-8
     error:
@@ -125,9 +125,10 @@ spring:
 exclude:
     uri:
         - /redis/*
+        - /
         - /hello/test
         - /login
         - /favicon.ico
 token:
     #登陆 token 有效时间
-    timeout: 1800
+    timeout: 3600
