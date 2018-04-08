@@ -9,11 +9,13 @@ import com.spring.boot.study.model.SiteInfo;
 import com.spring.boot.study.model.master.Areas;
 import com.spring.boot.study.model.master.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @Service
 public class SysService {
@@ -27,6 +29,8 @@ public class SysService {
     private SysUserSlave1Dao sysUserSlave1Dao;
     @Autowired
     private SiteInfoDao siteInfoDao;
+    @Autowired
+    private ExecutorService executorService;
 
     @Transactional
     public Areas getAreaByName(String name) {
@@ -48,6 +52,26 @@ public class SysService {
 
     public SiteInfo getSiteInfoById(long id) {
         return siteInfoDao.selectByPrimaryKey(id);
+    }
+
+    @Async("taskExecutor")
+    public void doTask() {
+        long start = System.currentTimeMillis();
+        try {
+            Future<String> task1 = executorService.taskOne();
+            Future<String> task2 = executorService.taskTwo();
+            Future<String> task3 = executorService.taskThree();
+            while (true) {
+                if(task1.isDone() && task2.isDone() && task3.isDone()) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        long end = System.currentTimeMillis();
+        System.out.printf("任务全部完成，总耗时：" + (end - start) + "毫秒");
     }
 
 }

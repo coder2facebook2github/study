@@ -3,6 +3,7 @@ package com.spring.boot.study.controller;
 import com.spring.boot.study.common.ConstantConfig;
 import com.spring.boot.study.common.filter.FilterConfiguration;
 import com.spring.boot.study.model.master.SysUser;
+import com.spring.boot.study.service.ExecutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @Controller
 public class TestController {
@@ -23,6 +25,8 @@ public class TestController {
 
     @Autowired
     private FilterConfiguration filterConfiguration;
+    @Autowired
+    private ExecutorService executorService;
 
     @ResponseBody
     @RequestMapping(value = "/hello/test")

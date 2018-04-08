@@ -8,7 +8,9 @@ import com.spring.boot.study.model.master.SysConfigurations;
 import com.utils.JedisService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -29,11 +31,14 @@ public class SysConfigInitServlet extends HttpServlet {
     private JedisService jedisService;
     @Autowired
     private SysConfigurationsDao sysConfigurationsDao;
+    @Value("${env}")
+    private String env;
 
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        System.out.println("************** environment: " + env);
         System.out.println("-----------sysConfigurationInit");
         sysConfigInit();
     }
@@ -52,7 +57,8 @@ public class SysConfigInitServlet extends HttpServlet {
         }
     }
 
-    private void sysConfigInit() {
+    @Async("taskExecutor")
+    protected void sysConfigInit() {
         List<SysConfigurations> sysConfigurationList = sysConfigurationsDao.getAllUsedConfigurations();
         if (sysConfigurationList != null && sysConfigurationList.size() > 0) {
             for (SysConfigurations sysConfiguration : sysConfigurationList) {
