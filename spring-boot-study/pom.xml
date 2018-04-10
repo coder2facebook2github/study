@@ -228,6 +228,12 @@
                 <deploy.env>company</deploy.env>
             </properties>
         </profile>
+        <profile>
+            <id>aliyun</id>
+            <properties>
+                <deploy.env>aliyun</deploy.env>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
