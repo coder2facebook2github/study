@@ -51,7 +51,7 @@ spring:
             driverClassName: com.mysql.jdbc.Driver
             type: com.alibaba.druid.pool.DruidDataSource
             url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-            password: root
+            password: Root_123456
             username: root
             druid:
                 initial-size: 5
@@ -62,7 +62,7 @@ spring:
             driverClassName: com.mysql.jdbc.Driver
             type: com.alibaba.druid.pool.DruidDataSource
             url: jdbc:mysql://localhost:3306/spring2?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
-            password: root
+            password: Root_123456
             username: root
             druid:
                 initial-size: 5
@@ -117,7 +117,7 @@ spring:
             - 2.0
             - 明月
     hello:
-        test: 床前明月光company
+        test: 床前明月光aliyun
 
 #不进行登陆验证的URI
 #不支持中间带 * 的匹配规则，如 /redis/*/get
