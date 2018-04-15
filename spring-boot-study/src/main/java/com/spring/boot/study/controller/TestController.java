@@ -41,12 +41,6 @@ public class TestController {
         return result;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/")
-    public String test2() {
-        return "Hello world !";
-    }
-
     @RequestMapping(value = "/exception")
     public String test() {
         int a = 3 / 0;

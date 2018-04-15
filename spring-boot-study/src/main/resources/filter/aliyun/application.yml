@@ -119,6 +119,10 @@ spring:
     hello:
         test: 床前明月光aliyun
 
+    #thymeleaf配置
+    thymeleaf:
+        mode: HTML5
+        cache: false
 #不进行登陆验证的URI
 #不支持中间带 * 的匹配规则，如 /redis/*/get
 exclude:
@@ -132,4 +136,4 @@ token:
     #登陆 token 有效时间
     timeout: 3600
 
-env: company
+env: aliyun

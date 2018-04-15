@@ -8,8 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>study-spring</name>
-    <description>Demo project for Spring Boot</description>
+    <name>spring-boot-study</name>
+    <description>project for Spring Boot study</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -46,6 +46,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -125,7 +132,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.0.4.RELEASE</version>
+            <version>5.0.5.RELEASE</version>
         </dependency>
         <!-- spring-boot热部署插件 -->
         <dependency>
@@ -151,6 +158,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork><!-- fork:如果没有该配置，这个devtools不会起作用，即应用不会restart -->
+                </configuration>
             </plugin>
 
             <!-- idea下的mybatis.generator生成代码工具，eclipse下请无视 -->
@@ -204,6 +214,8 @@
                 <includes>
                     <include>**/*.yml</include>
                     <include>**/*.xml</include>
+                    <include>static/**</include>
+                    <include>templates/**</include>
                 </includes>
             </resource>
             <resource>

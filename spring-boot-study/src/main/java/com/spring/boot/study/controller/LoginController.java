@@ -20,6 +20,12 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+
+    @RequestMapping(value = "/")
+    public String loginPage() {
+        return "login";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map<String, Object> loginIn(@RequestBody LoginVo loginVo) {
