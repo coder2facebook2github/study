@@ -21,9 +21,15 @@ public class LoginController {
     private LoginService loginService;
 
 
+//    @RequestMapping(value = "/")
+//    public String loginPage() {
+//        return "login";
+//    }
+
+    @ResponseBody
     @RequestMapping(value = "/")
     public String loginPage() {
-        return "login";
+        return "Hello world !";
     }
 
     @ResponseBody
