@@ -215,6 +215,7 @@
                     <include>**/*.yml</include>
                     <include>**/*.xml</include>
                     <include>static/**</include>
+                    <include>image/**</include>
                     <include>templates/**</include>
                 </includes>
             </resource>

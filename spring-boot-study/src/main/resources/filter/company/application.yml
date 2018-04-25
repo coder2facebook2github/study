@@ -131,8 +131,14 @@ exclude:
         - /hello/test
         - /login
         - /favicon.ico
+        - /js/*
+        - /css/*
+        - /statics/*
+        - /image/*
 token:
     #登陆 token 有效时间
     timeout: 3600
 
 env: company
+
+

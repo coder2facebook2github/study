@@ -52,6 +52,7 @@ spring:
             type: com.alibaba.druid.pool.DruidDataSource
             url: jdbc:mysql://localhost:3306/spring?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
             password: Root_123456
+#            password: root
             username: root
             druid:
                 initial-size: 5
@@ -132,6 +133,9 @@ exclude:
         - /hello/test
         - /login
         - /favicon.ico
+        - /aliyun/welcome
+        - /js/*
+        - /css/*
 token:
     #登陆 token 有效时间
     timeout: 3600
