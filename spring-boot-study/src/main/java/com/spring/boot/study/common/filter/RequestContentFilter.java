@@ -1,6 +1,7 @@
 package com.spring.boot.study.common.filter;
 
 import com.spring.boot.study.common.RepeatedlyReadRequestWrapper;
+import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -9,7 +10,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebFilter(urlPatterns = "/*", filterName = "requestContentFilter")
+//@WebFilter(urlPatterns = "/*", filterName = "requestContentFilter")
 public class RequestContentFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
