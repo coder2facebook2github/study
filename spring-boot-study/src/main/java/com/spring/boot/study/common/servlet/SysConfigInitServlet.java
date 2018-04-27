@@ -27,7 +27,6 @@ public class SysConfigInitServlet extends HttpServlet {
     @Autowired
     private SystemConfigInitRunner sysConfigInit;
 
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);

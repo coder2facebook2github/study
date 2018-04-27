@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServletConfiguration {
 
-
     @Bean("sysConfigInitServlet")
     public ServletRegistrationBean sysConfigInitServlet() {
         ServletRegistrationBean registrationBean = new ServletRegistrationBean(new SysConfigInitServlet());
