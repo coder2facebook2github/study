@@ -28,25 +28,25 @@ public class FilterConfiguration {
     /**
      * 这是必须的，loginFilter里注入有其他的Bean
      */
-    @Bean("loginFilter")
-    public LoginFilter loginFilter() {
-        return new LoginFilter();
-    }
+//    @Bean("loginFilter")
+//    public LoginFilter loginFilter() {
+//        return new LoginFilter();
+//    }
 
     /**
      * 这种方式能够决定Filter的执行顺序，@WebFilter的方式不能决定Filter的执行顺序
      * spring-boot @WebFilter not support @Order
      * https://github.com/spring-projects/spring-boot/issues/8276
      */
-    @Bean("loginFilterRegister")
-    public FilterRegistrationBean loginFilterRegister(LoginFilter loginFilter) {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(loginFilter);
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.setName("loginFilter");
-        registrationBean.setOrder(Integer.MAX_VALUE);
-        return registrationBean;
-    }
+//    @Bean("loginFilterRegister")
+//    public FilterRegistrationBean loginFilterRegister(LoginFilter loginFilter) {
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        registrationBean.setFilter(loginFilter);
+//        registrationBean.addUrlPatterns("/*");
+//        registrationBean.setName("loginFilter");
+//        registrationBean.setOrder(Integer.MAX_VALUE);
+//        return registrationBean;
+//    }
 
     /**
      * 这是非必须的

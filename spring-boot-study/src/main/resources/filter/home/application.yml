@@ -8,12 +8,6 @@ server:
         include-exception: true
         response-json-include-trace: false
 
-pagehelper:
-    helper-dialect: mysql
-    params: count=countSql
-    reasonable: true
-    support-methods-arguments: true
-
 spring:
     #编码配置
     http:
@@ -68,24 +62,6 @@ spring:
         mode: HTML5
         cache: false
 
-
-#不进行登陆验证的URI
-#不支持中间带 * 的匹配规则，如 /redis/*/get
-login:
-    exclude:
-        uri:
-            - /redis/*
-            - /
-            - /hello/test
-            - /login
-            - /favicon.ico
-            - /js/*
-            - /css/*
-            - /image/*
-
-token:
-    #登陆 token 有效时间
-    timeout: 3600
 
 
 env: home

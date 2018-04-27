@@ -64,8 +64,10 @@ public class LoadPropertiesListener implements ApplicationListener<ApplicationEn
         mutablePropertySources.addLast(loadYaml(jdbcConfig, "jdbc.yml"));
         Resource redisConfig = new ClassPathResource("redis.yml");
         mutablePropertySources.addLast(loadYaml(redisConfig, "redis.yml"));
-        Resource commonsConfig = new ClassPathResource("boot-commons.yml");
-        mutablePropertySources.addLast(loadYaml(commonsConfig, "boot-commons.yml"));
+        Resource differenceConfig = new ClassPathResource("difference-commons.yml");
+        mutablePropertySources.addLast(loadYaml(differenceConfig, "difference-commons.yml"));
+        Resource noDifferenceConfig = new ClassPathResource("no-difference-commons.yml");
+        mutablePropertySources.addLast(loadYaml(noDifferenceConfig, "no-difference-commons.yml"));
     }
 
     private PropertySource<?> loadYaml(Resource path, String sourceName) {

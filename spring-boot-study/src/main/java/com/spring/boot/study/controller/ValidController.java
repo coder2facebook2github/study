@@ -3,6 +3,7 @@ package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.validate.group.GroupA;
 import com.spring.boot.study.common.validate.group.GroupB;
+import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.RedisSetVo;
 import com.spring.boot.study.model.master.vo.RegisterVo;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,10 @@ public class ValidController {
      */
     @ResponseBody
     @RequestMapping(value = "/valid/a")
-    public Map<String, Object> testValid1(@Validated(GroupA.class)@RequestBody RegisterVo user) {
+    public Map<String, Object> testValid1(@Validated(GroupA.class)@RequestBody RegisterVo user, SysUser sysUser) {
         Map<String, Object> result = new HashMap<>();
         result.put("user", user);
+        result.put("sysUser", sysUser);
         return result;
     }
 
