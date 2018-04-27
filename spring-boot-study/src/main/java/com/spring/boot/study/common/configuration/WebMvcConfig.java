@@ -50,15 +50,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/image/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+ "/image/");
     }
 
-    /**
-     * interceptor的好处是静态资源不拦截
-     * @param registry
-     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getLoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(new ArrayList<>(uri));
-        System.out.println("=========");
     }
 }

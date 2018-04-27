@@ -30,13 +30,13 @@ public class LoginController {
             return "login";
         }
         if("aliyun".equals(env)) {
-            return "redirect:aliyun/welcome";
+            return "redirect:welcome";
         }
         return "";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/aliyun/welcome", method = RequestMethod.GET)
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String welcomePage() {
         return "Hello world !";
     }

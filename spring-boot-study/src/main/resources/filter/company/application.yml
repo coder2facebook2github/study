@@ -23,22 +23,7 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
         #对于null值不序列化
         default-property-inclusion: non_null
-    #邮箱配置
-    mail:
-        host: smtp.163.com
-        password: ''
-        port: 25
-        properties:
-            mai:
-                smtp:
-                    starttls:
-                        required: true
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
-        username: 18511717504@163.com
+
     #常量配置
     constant:
         user:

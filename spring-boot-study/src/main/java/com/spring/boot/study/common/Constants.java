@@ -31,4 +31,6 @@ public interface Constants {
     String MESSAGE = "message";
 
     String AUTHORIZATION = "Authorization";
+
+    String MAIL_CODE = "mail_code:";
 }
