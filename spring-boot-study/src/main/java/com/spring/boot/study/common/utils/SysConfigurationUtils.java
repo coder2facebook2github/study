@@ -1,7 +1,8 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.utils;
 
 
 import com.google.common.base.Splitter;
+import com.spring.boot.study.common.Constants;
 import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

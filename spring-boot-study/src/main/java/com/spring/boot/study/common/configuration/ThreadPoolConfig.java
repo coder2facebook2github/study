@@ -1,4 +1,4 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

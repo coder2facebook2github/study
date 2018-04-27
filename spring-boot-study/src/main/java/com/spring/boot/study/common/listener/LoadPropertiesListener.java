@@ -1,4 +1,4 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.listener;
 
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.env.PropertiesPropertySourceLoader;
@@ -9,11 +9,9 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
 public class LoadPropertiesListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
     private final YamlPropertySourceLoader yamlLoader = new YamlPropertySourceLoader();

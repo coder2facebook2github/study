@@ -1,4 +1,4 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
@@ -9,6 +9,8 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.spring.boot.study.common.CloseResource;
+import com.spring.boot.study.common.Constants;
 import com.utils.JedisService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;

@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 
-@WebServlet(name = "sysConfigInitServlet", urlPatterns = "/sys/config/init"/*, loadOnStartup = 2*/)
+//@WebServlet(name = "sysConfigInitServlet", urlPatterns = "/sys/config/init"/*, loadOnStartup = 2*/)
 public class SysConfigInitServlet extends HttpServlet {
 
     @Value("${env}")

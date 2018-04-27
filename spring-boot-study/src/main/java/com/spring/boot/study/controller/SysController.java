@@ -1,7 +1,7 @@
 package com.spring.boot.study.controller;
 
 
-import com.spring.boot.study.common.ConstantConfig;
+import com.spring.boot.study.common.configuration.ConstantConfig;
 import com.spring.boot.study.model.master.Areas;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.service.SysService;

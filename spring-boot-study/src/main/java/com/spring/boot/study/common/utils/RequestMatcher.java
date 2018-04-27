@@ -1,4 +1,4 @@
-package com.spring.boot.study.common;
+package com.spring.boot.study.common.utils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
