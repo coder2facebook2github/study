@@ -1,11 +1,16 @@
 package com.spring.boot.study;
 
+import com.spring.boot.study.common.LoadPropertiesListener;
 import com.spring.boot.study.common.argument.resolver.LoginUserResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,7 +25,9 @@ public class StudyApplication implements WebMvcConfigurer {
     private LoginUserResolver loginUserResolver;
 
     public static void main(String[] args) {
-        SpringApplication.run(StudyApplication.class, args);
+        SpringApplication springApplication =new SpringApplication(StudyApplication.class);
+        springApplication.addListeners(new LoadPropertiesListener());
+        springApplication.run(args);
     }
 
     @Override

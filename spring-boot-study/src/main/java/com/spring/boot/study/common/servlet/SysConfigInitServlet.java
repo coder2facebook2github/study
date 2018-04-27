@@ -2,15 +2,11 @@ package com.spring.boot.study.common.servlet;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.spring.boot.study.common.Constants;
-import com.spring.boot.study.dao.master.sys.SysConfigurationsDao;
-import com.spring.boot.study.model.master.SysConfigurations;
-import com.utils.JedisService;
+import com.spring.boot.study.common.SystemConfigInitRunner;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -21,26 +17,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 
-@WebServlet(name = "sysConfigInitServlet", urlPatterns = "/sys/config/init", loadOnStartup = 2)
+@WebServlet(name = "sysConfigInitServlet", urlPatterns = "/sys/config/init"/*, loadOnStartup = 2*/)
 public class SysConfigInitServlet extends HttpServlet {
 
-    @Autowired
-    private JedisService jedisService;
-    @Autowired
-    private SysConfigurationsDao sysConfigurationsDao;
     @Value("${env}")
     private String env;
+    @Autowired
+    private SystemConfigInitRunner sysConfigInit;
 
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         System.out.println("************** environment: " + env);
-        System.out.println("-----------sysConfigurationInit");
-        sysConfigInit();
     }
 
     @Override
@@ -53,18 +44,7 @@ public class SysConfigInitServlet extends HttpServlet {
         String requestBody = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
         boolean init = JSONObject.parseObject(requestBody).getBoolean("init");
         if (init) {
-            sysConfigInit();
-        }
-    }
-
-    @Async("taskExecutor")
-    protected void sysConfigInit() {
-        List<SysConfigurations> sysConfigurationList = sysConfigurationsDao.getAllUsedConfigurations();
-        if (sysConfigurationList != null && sysConfigurationList.size() > 0) {
-            for (SysConfigurations sysConfiguration : sysConfigurationList) {
-                jedisService.hset(Constants.SYS_CONFIGURATIONS, sysConfiguration.getKey(),
-                        sysConfiguration.getValue(), 0);
-            }
+            sysConfigInit.sysConfigInit();
         }
     }
 

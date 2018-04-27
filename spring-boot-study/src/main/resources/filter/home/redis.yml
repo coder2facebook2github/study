@@ -1,0 +1,10 @@
+#redis配置
+redis:
+    pool:
+        config:
+            maxIdle: 10
+            maxTotal: 12
+            minIdle: 0
+    sentinel:
+        master-name: mymaster
+        nodes: localhost:26379

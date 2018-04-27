@@ -1,8 +1,8 @@
 package com.spring.boot.study.controller;
 
 
-import com.spring.boot.study.common.ValidateGroup.group.GroupA;
-import com.spring.boot.study.common.ValidateGroup.group.GroupB;
+import com.spring.boot.study.common.validate.group.GroupA;
+import com.spring.boot.study.common.validate.group.GroupB;
 import com.spring.boot.study.model.master.vo.RedisSetVo;
 import com.spring.boot.study.model.master.vo.RegisterVo;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.spring.boot.study.common.ValidateGroup.group;
+package com.spring.boot.study.common.validate.group;
 
 public interface GroupA {
 }
