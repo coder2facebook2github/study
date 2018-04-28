@@ -11,6 +11,7 @@ login:
             - /**/*.js
             - /**/*.jpg
             - /**/*.png
+            - /login.html
 
 pagehelper:
     helper-dialect: mysql
@@ -19,8 +20,8 @@ pagehelper:
     support-methods-arguments: true
 
 token:
-    #登陆 token 有效时间
-    timeout: 3600
+    #登陆 token 有效时间 24 * 3600
+    timeout: 86400
 
 #mybatis配置
 mybatis:
