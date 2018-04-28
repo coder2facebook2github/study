@@ -11,7 +11,7 @@ login:
             - /**/*.js
             - /**/*.jpg
             - /**/*.png
-            - /login.html
+            - /template/**
 
 pagehelper:
     helper-dialect: mysql
