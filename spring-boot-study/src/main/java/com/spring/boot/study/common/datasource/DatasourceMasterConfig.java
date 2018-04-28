@@ -17,8 +17,8 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan(basePackages = "com.spring.boot.study.dao.master",
-        sqlSessionFactoryRef = "sqlSessionFactoryMaster",
-        sqlSessionTemplateRef = "sqlSessionTemplateMaster")
+        sqlSessionTemplateRef = "sqlSessionTemplateMaster",
+        sqlSessionFactoryRef = "sqlSessionFactoryMaster")
 public class DatasourceMasterConfig {
 
     @Primary
