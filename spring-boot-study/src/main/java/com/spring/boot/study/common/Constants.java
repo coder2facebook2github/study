@@ -33,4 +33,6 @@ public interface Constants {
     String AUTHORIZATION = "Authorization";
 
     String MAIL_CODE = "mail_code:";
+
+    String IMAGE_TOKEN = "IMAGE_TOKEN:";
 }

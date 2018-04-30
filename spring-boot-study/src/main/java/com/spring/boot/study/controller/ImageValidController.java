@@ -1,8 +1,10 @@
 package com.spring.boot.study.controller;
 
+import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.model.master.vo.RandomImage;
 import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,9 @@ public class ImageValidController {
     @Autowired
     private JedisService jedisService;
 
+    @Value("${token.image.timeout}")
+    private int timeout;
+
     @RequestMapping(value = "/image/random", method = RequestMethod.GET)
     public void createImage(@NotBlank(message = "token不能为空") String token, HttpServletResponse response) throws IOException {
         // 禁止图像缓存。
@@ -32,11 +37,10 @@ public class ImageValidController {
         Map<String, Object> randomCodeMap = new HashMap<>();
         randomCodeMap.put("code", randomImage.getRandomCode());
         randomCodeMap.put("count", 0);
-        jedisService.set(token, randomCodeMap, 10 * 60);
+        jedisService.set(Constants.IMAGE_TOKEN + token, randomCodeMap, timeout);
         ServletOutputStream outputStream;
         outputStream = response.getOutputStream();
         ImageIO.write(randomImage.getImage(), "jpg", outputStream);
         outputStream.close();
     }
-
 }

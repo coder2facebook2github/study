@@ -27,7 +27,37 @@ public class LoginService {
     private JedisService jedisService;
     @Value("${token.timeout}")
     private Integer timeout;
+    @Value("${token.image.count}")
+    private Integer tryCount;
+    @Value("${token.image.timeout}")
+    private Integer imageTimeout;
     private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+    public Map<String, Object> validateImageCode(LoginVo loginVo) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            Map<String, Object> randomCodeMap = jedisService.get(Constants.IMAGE_TOKEN + loginVo.getToken());
+            int count = (int)randomCodeMap.get("count");
+            if(count >= tryCount) {
+                result.put(Constants.MESSAGE, "验证码过期，请重新获取验证码");
+                return result;
+            }
+            String code = (String)randomCodeMap.get("code");
+            if(code.equals(loginVo.getCode())) {
+                result.put(Constants.MESSAGE, Constants.SUCCESS);
+                jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
+            } else {
+                result.put(Constants.MESSAGE, "验证码有误");
+                randomCodeMap.put("count", count + 1);
+                jedisService.set(Constants.IMAGE_TOKEN + loginVo.getToken(), randomCodeMap, imageTimeout);
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            result.put(Constants.MESSAGE, "验证码过期，请重新获取验证码");
+            return result;
+        }
+        return result;
+    }
 
     public Map<String, Object> validateUser(LoginVo loginVo) {
         Map<String, Object> result = new HashMap<>();

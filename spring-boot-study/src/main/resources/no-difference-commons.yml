@@ -22,6 +22,11 @@ pagehelper:
 token:
     #登陆 token 有效时间 24 * 3600
     timeout: 86400
+    image:
+        #图片验证码有效期 10 * 60
+        timeout: 600
+        #最大尝试次数
+        count: 5
 
 #mybatis配置
 mybatis:
