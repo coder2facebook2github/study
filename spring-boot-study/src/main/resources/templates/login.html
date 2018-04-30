@@ -2,22 +2,39 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/header::header"></head>
 <body class="text-center">
-<nav th:replace="common/nav :: nav"></nav>
+<!--<nav th:replace="common/nav :: nav"></nav>-->
 <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
 <form class="form-signin">
-    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <img class="mb-4" src="https://sites.image.biyoshop.com/newerp/201804/3ac2a7848a2a38a1e0dcce5f2a02c8ca_20180430.jpg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input type="tel" id="inputEmail" class="form-control" placeholder="手机号" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-    <div class="checkbox mb-3">
-        <label class="pull-left">
-            <input type="checkbox" value="remember-me"> Remember me
+    <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+    <input type="hidden" th:value="${token}" name="token" id="token">
+
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" name="validCode" placeholder="验证码"/>
+        </div>
+        <div class="col">
+            <img class="random-image" th:attr="src=${randomImageUrl}" style="cursor:pointer" id="randomImage" title="点击刷新" onclick="changeCode();"/>
+        </div>
+    </div>
+
+    <div class="checkbox mb-3 remember">
+        <label>
+            <input type="checkbox" value="1"> Remember me
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
+<script type="application/javascript">
+    function changeCode() {
+        var randomImage = $("#randomImage");
+        randomImage.attr("src", randomImage.attr("src") + "&random=" + new Date().getTime());
+    }
+</script>
 </body>
 </html>

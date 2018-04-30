@@ -4,9 +4,11 @@ import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.LoginVo;
 import com.spring.boot.study.service.LoginService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -25,7 +29,10 @@ public class LoginController {
 
 
     @RequestMapping(value = "/")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        String token = DigestUtils.md5Hex(UUID.randomUUID().toString() + new Random().nextLong());
+        model.addAttribute("randomImageUrl", "/image/random?token=" + token);
+        model.addAttribute("token", token);
         if("home".equals(env) || "company".equals(env)) {
             return "login";
         }

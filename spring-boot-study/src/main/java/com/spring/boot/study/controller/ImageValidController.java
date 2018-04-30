@@ -1,0 +1,42 @@
+package com.spring.boot.study.controller;
+
+import com.spring.boot.study.model.master.vo.RandomImage;
+import com.utils.JedisService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotBlank;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+public class ImageValidController {
+
+    @Autowired
+    private JedisService jedisService;
+
+    @RequestMapping(value = "/image/random", method = RequestMethod.GET)
+    public void createImage(@NotBlank(message = "token不能为空") String token, HttpServletResponse response) throws IOException {
+        // 禁止图像缓存。
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", -1);
+        response.setContentType("image/jpeg");
+        RandomImage randomImage = new RandomImage();
+        Map<String, Object> randomCodeMap = new HashMap<>();
+        randomCodeMap.put("code", randomImage.getRandomCode());
+        randomCodeMap.put("count", 0);
+        jedisService.set(token, randomCodeMap, 10 * 60);
+        ServletOutputStream outputStream;
+        outputStream = response.getOutputStream();
+        ImageIO.write(randomImage.getImage(), "jpg", outputStream);
+        outputStream.close();
+    }
+
+}

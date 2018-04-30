@@ -123,10 +123,16 @@ public class SelfExceptionHandlerResolver extends AbstractErrorController {
                                                            ConstraintViolationException violationException) {
         Map<String, Object> errorParam = new HashMap<>();
         Iterator iterator = violationException.getConstraintViolations().iterator();
+        int count = 0;
         while (iterator.hasNext()) {
             ConstraintViolation exception = (ConstraintViolation)iterator.next();
-            String[] messages = exception.getMessage().split(":");
-            errorParam.put(messages[0], messages[1]);
+            String errorMessage = exception.getMessage();
+            if(errorMessage.contains(":")) {
+                String[] messages = errorMessage.split(":");
+                errorParam.put(messages[0], messages[1]);
+            } else {
+                errorParam.put("参数错误" + ++count, errorMessage);
+            }
         }
         return jsonResponseData(request, errorParam);
     }
