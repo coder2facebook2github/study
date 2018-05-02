@@ -10,9 +10,9 @@ public class LoginVo implements Serializable {
     private String username;
     @NotBlank(message = "密码不能为空")
     private String password;
-    @NotBlank(message = "token不能为空")
+//    @NotBlank(message = "token不能为空")
     private String token;
-    @NotBlank(message = "验证码不能为空")
+//    @NotBlank(message = "验证码不能为空")
     private String code;
 
     public String getCode() {

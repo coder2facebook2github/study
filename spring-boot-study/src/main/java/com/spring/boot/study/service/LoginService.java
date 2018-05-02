@@ -45,7 +45,6 @@ public class LoginService {
             String code = (String)randomCodeMap.get("code");
             if(code.equals(loginVo.getCode())) {
                 result.put(Constants.MESSAGE, Constants.SUCCESS);
-                jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
             } else {
                 result.put(Constants.MESSAGE, "验证码有误");
                 randomCodeMap.put("count", count + 1);

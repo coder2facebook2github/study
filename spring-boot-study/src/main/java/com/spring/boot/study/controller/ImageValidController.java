@@ -1,13 +1,16 @@
 package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.Constants;
+import com.spring.boot.study.model.master.vo.LoginVo;
 import com.spring.boot.study.model.master.vo.RandomImage;
+import com.spring.boot.study.service.LoginService;
 import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -22,6 +25,8 @@ public class ImageValidController {
 
     @Autowired
     private JedisService jedisService;
+    @Autowired
+    private LoginService loginService;
 
     @Value("${token.image.timeout}")
     private int timeout;
@@ -42,5 +47,22 @@ public class ImageValidController {
         outputStream = response.getOutputStream();
         ImageIO.write(randomImage.getImage(), "jpg", outputStream);
         outputStream.close();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/valid/image/code", method = RequestMethod.POST)
+    public Map<String, Boolean> validCode(@NotBlank(message = "token错误") String token,
+                                         @NotBlank(message = "验证码错误") String code) {
+        Map<String, Boolean> validResult = new HashMap<>();
+        LoginVo validVo = new LoginVo();
+        validVo.setCode(code);
+        validVo.setToken(token);
+        Map<String, Object> checkResult = loginService.validateImageCode(validVo);
+        if(!Constants.SUCCESS.equals(checkResult.get(Constants.MESSAGE))) {
+            validResult.put("valid", false);
+        } else {
+            validResult.put("valid", true);
+        }
+        return validResult;
     }
 }

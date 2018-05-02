@@ -8,8 +8,10 @@ login:
             - /login
             - /welcome
             - /image/random
+            - /valid/image/code
             - /**/*.css
             - /**/*.js
+            - /**/*.map
             - /**/*.jpg
             - /**/*.png
 

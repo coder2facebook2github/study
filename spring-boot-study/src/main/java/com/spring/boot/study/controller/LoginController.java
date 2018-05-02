@@ -54,10 +54,10 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map<String, Object> loginIn(@RequestBody @Validated LoginVo loginVo) {
         Map<String, Object> result = new HashMap<>();
-        Map<String, Object> checkImageCode = loginService.validateImageCode(loginVo);
-        if(!Constants.SUCCESS.equals(checkImageCode.get(Constants.MESSAGE))) {
-            return checkImageCode;
-        }
+//        Map<String, Object> checkImageCode = loginService.validateImageCode(loginVo);
+//        if(!Constants.SUCCESS.equals(checkImageCode.get(Constants.MESSAGE))) {
+//            return checkImageCode;
+//        }
         Map<String, Object> checkUser = loginService.validateUser(loginVo);
         if (!Constants.SUCCESS.equals(checkUser.get(Constants.MESSAGE))) {
             return checkUser;
