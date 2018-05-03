@@ -85,9 +85,8 @@ public class LoginService {
         return user.getPassword().equals(submitPassword);
     }
 
-    public void setTokenExpiryTime(long userId) {
-        long currentMillis = System.currentTimeMillis();
-        jedisService.set(Constants.USER_TOKEN + userId, currentMillis, timeout);
+    public void setTokenExpiryTime(long userId, String token) {
+        jedisService.set(Constants.USER_TOKEN + userId, token, timeout);
     }
 
     public String createJwt(SysUser sysUser) {

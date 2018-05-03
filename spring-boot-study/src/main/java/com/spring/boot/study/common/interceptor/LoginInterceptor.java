@@ -44,7 +44,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         try {
-            long lastTime = jedisService.get(Constants.USER_TOKEN + userId);
+            String token = jedisService.get(Constants.USER_TOKEN + userId);
+            if(StringUtils.isBlank(token) || !token.equals(authorizationHeader)) {
+                throw new LoginException("token失效", 401);
+            }
         } catch (NullPointerException e) {
             e.printStackTrace();
             throw new LoginException("登陆已过期，请重新登陆", 401);

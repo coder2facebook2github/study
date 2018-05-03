@@ -67,9 +67,10 @@ public class LoginController {
         }
         SysUser user = (SysUser) checkUser.get("sysUser");
         String token = loginService.createJwt(user);
-        loginService.setTokenExpiryTime(user.getId());
+        loginService.setTokenExpiryTime(user.getId(), token);
         result.put(Constants.MESSAGE, Constants.SUCCESS);
         jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
+        System.out.println("=======token: " + token);
         result.put("token", token);
         return result;
     }
