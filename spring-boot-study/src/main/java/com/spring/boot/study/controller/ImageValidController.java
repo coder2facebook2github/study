@@ -31,7 +31,7 @@ public class ImageValidController {
     @Value("${token.image.timeout}")
     private int timeout;
 
-    @RequestMapping(value = "/image/random", method = RequestMethod.GET)
+    @RequestMapping(value = "/image/random/noLogin", method = RequestMethod.GET)
     public void createImage(@NotBlank(message = "token不能为空") String token, HttpServletResponse response) throws IOException {
         // 禁止图像缓存。
         response.setHeader("Pragma", "no-cache");
@@ -50,7 +50,7 @@ public class ImageValidController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/valid/image/code", method = RequestMethod.POST)
+    @RequestMapping(value = "/valid/image/code/noLogin", method = RequestMethod.POST)
     public Map<String, Object> validCode(@NotBlank(message = "token错误") String token,
                                          @NotBlank(message = "验证码错误") String code) {
         Map<String, Object> validResult = new HashMap<>();

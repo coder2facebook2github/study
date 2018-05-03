@@ -4,6 +4,7 @@ import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.LoginVo;
 import com.spring.boot.study.service.LoginService;
+import com.utils.JedisService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,12 +28,14 @@ public class LoginController {
     private LoginService loginService;
     @Value("${env}")
     private String env;
+    @Autowired
+    private JedisService jedisService;
 
 
     @RequestMapping(value = "/")
     public String loginPage(Model model) {
         String token = DigestUtils.md5Hex(UUID.randomUUID().toString() + new Random().nextLong());
-        model.addAttribute("randomImageUrl", "/image/random?token=" + token);
+        model.addAttribute("randomImageUrl", "/image/random/noLogin?token=" + token);
         model.addAttribute("token", token);
         if("home".equals(env) || "company".equals(env)) {
             return "login";
@@ -54,10 +57,10 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Map<String, Object> loginIn(@RequestBody @Validated LoginVo loginVo) {
         Map<String, Object> result = new HashMap<>();
-//        Map<String, Object> checkImageCode = loginService.validateImageCode(loginVo);
-//        if(!Constants.SUCCESS.equals(checkImageCode.get(Constants.MESSAGE))) {
-//            return checkImageCode;
-//        }
+        Map<String, Object> checkImageCode = loginService.validateImageCode(loginVo);
+        if(!Constants.SUCCESS.equals(checkImageCode.get(Constants.MESSAGE))) {
+            return checkImageCode;
+        }
         Map<String, Object> checkUser = loginService.validateUser(loginVo);
         if (!Constants.SUCCESS.equals(checkUser.get(Constants.MESSAGE))) {
             return checkUser;
@@ -66,12 +69,13 @@ public class LoginController {
         String token = loginService.createJwt(user);
         loginService.setTokenExpiryTime(user.getId());
         result.put(Constants.MESSAGE, Constants.SUCCESS);
+        jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
         result.put("token", token);
         return result;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/check/mobile/exist", method = RequestMethod.POST)
+    @RequestMapping(value = "/check/mobile/exist/noLogin", method = RequestMethod.POST)
     public Map<String, Object> checkMobileExist(String mobile) {
         Map<String, Object> validResult = new HashMap<>();
         SysUser user = loginService.getSysUserByMobile(mobile);
@@ -82,7 +86,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/check/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/check/password/noLogin", method = RequestMethod.POST)
     public Map<String, Object> checkPassword(String mobile, String password) {
         Map<String, Object> validResult = new HashMap<>();
         boolean checkResult = loginService.checkPassword(mobile, password);

@@ -52,17 +52,32 @@ public class FilterConfiguration {
      * 这是非必须的
      */
     @Bean("requestContentFilter")
-    public RequestContentFilter RequestContentFilter() {
+    public RequestContentFilter requestContentFilter() {
         return new RequestContentFilter();
     }
 
     @Bean("requestContentFilterRegister")
     public FilterRegistrationBean requestContentFilterRegister(RequestContentFilter requestContentFilter) {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new RequestContentFilter());
+        registrationBean.setFilter(requestContentFilter);
         registrationBean.addUrlPatterns("/*");
         registrationBean.setName("requestContentFilter");
         registrationBean.setOrder(Integer.MAX_VALUE - 1);
+        return registrationBean;
+    }
+
+    @Bean("timeFilter")
+    public TimeFilter timeFilter() {
+        return new TimeFilter();
+    }
+
+    @Bean("timeFilterRegister")
+    public FilterRegistrationBean timeFilterRegister(TimeFilter timeFilter) {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(timeFilter);
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setName("timeFilter");
+        registrationBean.setOrder(Integer.MAX_VALUE - 2);
         return registrationBean;
     }
 

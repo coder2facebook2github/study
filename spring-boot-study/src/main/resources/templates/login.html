@@ -40,29 +40,37 @@
     $(function () {
         $("#login-form").validator({
             rules: {
-                checkImageCode: function(element) {
-                    return $.ajax({
-                        url: '/valid/image/code',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {code: $(element).val(), token: $("#token").val()}
-                    });
-                },
                 checkMobileExist: function(element) {
                     return $.ajax({
-                        url: '/check/mobile/exist',
+                        url: '/check/mobile/exist/noLogin',
                         type: 'post',
+                        async: false,
                         dataType: 'json',
                         data: {mobile: $(element).val()}
                     });
                 },
                 checkPassword: function(element) {
                     return $.ajax({
-                        url: '/check/password',
+                        url: '/check/password/noLogin',
                         type: 'post',
                         dataType: 'json',
+                        async: false,
                         data: {password: $(element).val(), mobile: $("#mobile").val()}
                     });
+                },
+                checkImageCode: function(element) {
+                    var checkResult = "";
+                    $.ajax({
+                        url: '/valid/image/code/noLogin',
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {code: $(element).val(), token: $("#token").val()},
+                        success: function(result) {
+                            checkResult = result;
+                        }
+                    });
+                    return checkResult;
                 }
             },
             valid: function($form) {
@@ -71,7 +79,7 @@
                 formObject.password = $("#password").val();
                 formObject.token = $("#token").val();
                 formObject.code = $("#code").val();
-                alert(JSON.stringify(formObject));
+                // alert(JSON.stringify(formObject));
                 $.ajax({
                     type: 'post',
                     url: '/login',

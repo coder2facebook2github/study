@@ -7,8 +7,7 @@ login:
             - /error
             - /login
             - /welcome
-            - /image/random
-            - /valid/image/code
+            - /**/noLogin
             - /**/*.css
             - /**/*.js
             - /**/*.map
