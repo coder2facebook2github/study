@@ -14,6 +14,7 @@ login:
             - /**/*.map
             - /**/*.jpg
             - /**/*.png
+            - /**/*.gif
 
 pagehelper:
     helper-dialect: mysql

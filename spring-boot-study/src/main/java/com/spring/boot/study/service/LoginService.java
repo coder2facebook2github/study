@@ -75,6 +75,16 @@ public class LoginService {
         return result;
     }
 
+    public SysUser getSysUserByMobile(String mobile) {
+        return sysUserDao.getByMobile(mobile);
+    }
+
+    public boolean checkPassword(String mobile, String password) {
+        SysUser user = sysUserDao.getByMobile(mobile);
+        String submitPassword = DigestUtils.md5Hex(password + user.getSalt());
+        return user.getPassword().equals(submitPassword);
+    }
+
     public void setTokenExpiryTime(long userId) {
         long currentMillis = System.currentTimeMillis();
         jedisService.set(Constants.USER_TOKEN + userId, currentMillis, timeout);

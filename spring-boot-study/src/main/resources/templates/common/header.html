@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment="header">
+<head th:fragment="header(includeValidate)">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +12,15 @@
 
     <script src="/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 
+    <!-- 验证框架 -->
+    <link th:if="${includeValidate == 1}" href="/formValidate/jquery.validator.css" type="text/css" rel="stylesheet">
+    <script th:if="${includeValidate == 1}" src="/formValidate/jquery.validator.min.js?local=zh-CN" type="text/javascript"></script>
+    <script th:if="${includeValidate == 1}" src="/formValidate/local/zh-CN.js" type="text/javascript"></script>
+
     <style>
         body {
             padding-top: 4.5rem;
         }
     </style>
 </head>
-<body></body>
 </html>

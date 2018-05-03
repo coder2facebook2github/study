@@ -70,4 +70,26 @@ public class LoginController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/check/mobile/exist", method = RequestMethod.POST)
+    public Map<String, Object> checkMobileExist(String mobile) {
+        Map<String, Object> validResult = new HashMap<>();
+        SysUser user = loginService.getSysUserByMobile(mobile);
+        if(user == null) {
+            validResult.put("error", "手机号不存在");
+        }
+        return validResult;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/check/password", method = RequestMethod.POST)
+    public Map<String, Object> checkPassword(String mobile, String password) {
+        Map<String, Object> validResult = new HashMap<>();
+        boolean checkResult = loginService.checkPassword(mobile, password);
+        if(!checkResult) {
+            validResult.put("error", "密码错误");
+        }
+        return validResult;
+    }
+
 }

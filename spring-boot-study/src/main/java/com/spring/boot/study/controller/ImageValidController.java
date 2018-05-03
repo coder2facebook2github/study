@@ -51,17 +51,15 @@ public class ImageValidController {
 
     @ResponseBody
     @RequestMapping(value = "/valid/image/code", method = RequestMethod.POST)
-    public Map<String, Boolean> validCode(@NotBlank(message = "token错误") String token,
+    public Map<String, Object> validCode(@NotBlank(message = "token错误") String token,
                                          @NotBlank(message = "验证码错误") String code) {
-        Map<String, Boolean> validResult = new HashMap<>();
+        Map<String, Object> validResult = new HashMap<>();
         LoginVo validVo = new LoginVo();
         validVo.setCode(code);
         validVo.setToken(token);
         Map<String, Object> checkResult = loginService.validateImageCode(validVo);
         if(!Constants.SUCCESS.equals(checkResult.get(Constants.MESSAGE))) {
-            validResult.put("valid", false);
-        } else {
-            validResult.put("valid", true);
+            validResult.put("error", checkResult.get(Constants.MESSAGE));
         }
         return validResult;
     }
