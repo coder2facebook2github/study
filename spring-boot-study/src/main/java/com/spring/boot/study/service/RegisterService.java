@@ -4,6 +4,7 @@ package com.spring.boot.study.service;
 import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.dao.master.sys.SysUserDao;
 import com.spring.boot.study.model.master.SysUser;
+import com.spring.boot.study.model.master.vo.RegisterVo;
 import com.utils.JedisService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -22,7 +23,7 @@ public class RegisterService {
     @Autowired
     private JedisService jedisService;
 
-    public int saveUser(SysUser user) {
+    public int saveUser(RegisterVo user) {
         user.setSalt(RandomStringUtils.randomAlphabetic(10));
         String password = DigestUtils.md5Hex(user.getPassword() + user.getSalt());
         user.setPassword(password);
@@ -30,14 +31,22 @@ public class RegisterService {
     }
 
     public boolean checkValidateCode(String mobile, String code) {
-        String redisCode = jedisService.getStr(Constants.MESSAGE_CODE + mobile);
-        if (StringUtils.isNotBlank(redisCode)) {
-            return redisCode.equals(code);
+        try {
+//            if(true) {
+//                return true;
+//            }
+            String redisCode = jedisService.getStr(Constants.MESSAGE_CODE + mobile);
+            if (StringUtils.isNotBlank(redisCode)) {
+                return redisCode.equals(code);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
         return false;
     }
 
-    public Map<String, String> validateUser(SysUser user) {
+    public Map<String, String> validateUser(RegisterVo user) {
         Map<String, String> result = new HashMap<>();
         if (user == null) {
             result.put(Constants.MESSAGE, "用户为空");

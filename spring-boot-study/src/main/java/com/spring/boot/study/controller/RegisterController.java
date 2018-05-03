@@ -5,11 +5,13 @@ import com.aliyuncs.exceptions.ClientException;
 import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.common.utils.SendSmsUtils;
 import com.spring.boot.study.model.master.SysUser;
+import com.spring.boot.study.model.master.vo.RegisterVo;
 import com.spring.boot.study.service.RegisterService;
 import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,9 +34,9 @@ public class RegisterController {
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Map<String, Object> register(@RequestBody SysUser user, String validateCode) {
+    public Map<String, Object> register(@RequestBody @Validated RegisterVo user) {
         Map<String, Object> result = new HashMap<>();
-        boolean checkCode = registerService.checkValidateCode(user.getMobile(), validateCode);
+        boolean checkCode = registerService.checkValidateCode(user.getMobile(), user.getValidateCode());
         Map<String, String> checkUser = registerService.validateUser(user);
         if(!Constants.SUCCESS.equals(checkUser.get(Constants.MESSAGE))) {
             result.put(Constants.MESSAGE, checkUser.get(Constants.MESSAGE));

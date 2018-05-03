@@ -36,14 +36,14 @@ public class SendSmsUtils {
 
     @Autowired
     private JedisService jedisService;
-    private String messageContent = "您的验证码是: $code，5分钟内有效，请勿泄露";
+    private String messageContent = "您的验证码是: $code，10分钟内有效，请勿泄露";
 
     public void sendValidateCode(String mobile) throws ClientException {
 //        this.sendMessage(mobile, Constants.SIGN_NAME, Constants.IDENTIFY_TEMPLATE_CODE, getRandomCode(6));
         String code = getRandomCode(6);
         boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code));
         if(sendSuccess) {
-            jedisService.setStr(Constants.MESSAGE_CODE + mobile, code);
+            jedisService.setStr(Constants.MESSAGE_CODE + mobile, code, 600);
             System.out.println("mobile: " + mobile + ", code: " + code);
         }
     }

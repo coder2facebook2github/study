@@ -280,7 +280,17 @@ public class JedisService {
         } finally {
             jedis.close();
         }
+    }
 
+    public void setStr(String key, String value, int seconds) {
+        Jedis jedis = getJedisPool().getResource();
+        try {
+            jedis.setex(key, seconds, value);
+        } catch (Exception e) {
+            LOGGER.error(e.getLocalizedMessage());
+        } finally {
+            jedis.close();
+        }
     }
 
     public <T extends Object> Long zadd(String key, double score, T member) {
