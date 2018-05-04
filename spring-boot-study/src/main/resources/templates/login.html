@@ -4,15 +4,16 @@
 <body class="text-center">
 <!--<nav th:replace="common/nav :: nav"></nav>-->
 <link th:href="@{/css/login.css?v={refreshValue}(refreshValue=${token})}" rel="stylesheet" type="text/css"/>
-<form class="form-signin" id="login-form">
+<div class="container">
+<form class="form-signin" id="login-form" action="/login" method="post">
     <img class="mb-4" src="https://sites.image.biyoshop.com/newerp/201804/3ac2a7848a2a38a1e0dcce5f2a02c8ca_20180430.jpg"
          alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 font-weight-normal">Please sign in</h1>
     <label for="mobile" class="sr-only">mobile</label>
     <input type="tel" id="mobile" name="username" class="form-control" placeholder="手机号"
            data-rule="手机号:required;mobile;checkMobileExist">
     <label for="password" class="sr-only">Password</label>
-    <input type="password" id="password" class="form-control" placeholder="密码"
+    <input type="password" id="password" name="password" class="form-control" placeholder="密码"
            data-rule="密码:required;checkPassword;">
     <input type="hidden" th:value="${token}" name="token" id="token">
 
@@ -33,8 +34,12 @@
         </label>
     </div>-->
     <button type="submit" class="btn btn-lg btn-primary btn-block submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    <div class="mb-3">
+        <a href="/forget/password/noLogin">忘记密码？</a>
+    </div>
+    <p class="mt-5 text-muted">&copy; 2017-2018</p>
 </form>
+</div>
 <script type="text/javascript">
 
     $(function () {
@@ -74,31 +79,32 @@
                 }
             },
             valid: function($form) {
-                var formObject = {};
-                formObject.username = $("#mobile").val();
-                formObject.password = $("#password").val();
-                formObject.token = $("#token").val();
-                formObject.code = $("#code").val();
-                // alert(JSON.stringify(formObject));
-                $.ajax({
-                    type: 'post',
-                    url: '/login',
-                    async: false,
-                    contentType: 'application/json',
-                    data: JSON.stringify(formObject),
-                    dataType: 'json',
-                    success: function (result) {
-                        if (result.message == "success") {
-                            alert("success");
-                            console.log(result);
-                        } else {
-                            alert(result.message);
-                        }
-                    },
-                    error: function() {
-                        alert("服务异常");
-                    }
-                });
+                $form.submit();
+                // var formObject = {};
+                // formObject.username = $("#mobile").val();
+                // formObject.password = $("#password").val();
+                // formObject.token = $("#token").val();
+                // formObject.code = $("#code").val();
+                // // alert(JSON.stringify(formObject));
+                // $.ajax({
+                //     type: 'post',
+                //     url: '/login',
+                //     async: false,
+                //     contentType: 'application/json',
+                //     data: JSON.stringify(formObject),
+                //     dataType: 'json',
+                //     success: function (result) {
+                //         if (result.message == "success") {
+                //             alert("success");
+                //             console.log(result);
+                //         } else {
+                //             alert(result.message);
+                //         }
+                //     },
+                //     error: function() {
+                //         alert("服务异常");
+                //     }
+                // });
             }
         });
     });

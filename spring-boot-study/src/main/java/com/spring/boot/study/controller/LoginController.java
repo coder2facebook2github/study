@@ -1,6 +1,7 @@
 package com.spring.boot.study.controller;
 
 import com.spring.boot.study.common.Constants;
+import com.spring.boot.study.common.exception.BootStudyException;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.LoginVo;
 import com.spring.boot.study.service.LoginService;
@@ -53,26 +54,23 @@ public class LoginController {
     }
 
 
-    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> loginIn(@RequestBody @Validated LoginVo loginVo) {
-        Map<String, Object> result = new HashMap<>();
+    public String loginIn(@Validated LoginVo loginVo, Model model) {
         Map<String, Object> checkImageCode = loginService.validateImageCode(loginVo);
         if(!Constants.SUCCESS.equals(checkImageCode.get(Constants.MESSAGE))) {
-            return checkImageCode;
+            throw new BootStudyException("验证码错误");
         }
         Map<String, Object> checkUser = loginService.validateUser(loginVo);
         if (!Constants.SUCCESS.equals(checkUser.get(Constants.MESSAGE))) {
-            return checkUser;
+            throw new BootStudyException("用户不存在或密码错误");
         }
         SysUser user = (SysUser) checkUser.get("sysUser");
         String token = loginService.createJwt(user);
         loginService.setTokenExpiryTime(user.getId(), token);
-        result.put(Constants.MESSAGE, Constants.SUCCESS);
         jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
         System.out.println("=======token: " + token);
-        result.put("token", token);
-        return result;
+        model.addAttribute("authToken", token);
+        return "retrievePassword";
     }
 
     @ResponseBody
@@ -95,6 +93,14 @@ public class LoginController {
             validResult.put("error", "密码错误");
         }
         return validResult;
+    }
+
+    @RequestMapping(value = "/forget/password/noLogin", method = RequestMethod.GET)
+    public String forgetPasswordPage(Model model) {
+        String token = DigestUtils.md5Hex(UUID.randomUUID().toString() + new Random().nextLong());
+        model.addAttribute("randomImageUrl", "/image/random/noLogin?token=" + token);
+        model.addAttribute("token", token);
+        return "retrievePassword";
     }
 
 }

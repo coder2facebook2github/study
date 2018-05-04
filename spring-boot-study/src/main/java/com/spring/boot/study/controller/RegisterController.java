@@ -50,7 +50,7 @@ public class RegisterController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/get/validate/code", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/validate/code/noLogin", method = RequestMethod.POST)
     public Map<String, Object> getValidateCode(String mobile, HttpServletRequest request) throws IOException {
         Map<String, Object> result = new HashMap<>();
         if(StringUtils.isBlank(mobile)) {

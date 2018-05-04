@@ -58,3 +58,14 @@ body {
 .submit {
     margin-top: 10px;
 }
+.mb-3 {
+    text-align: right;
+    margin-top: 10px;
+}
+.repeat-password {
+    margin-bottom: 10px;
+}
+.getMsgCode {
+    position: relative;
+    bottom: 3px;
+}
