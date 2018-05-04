@@ -6,6 +6,7 @@ import com.spring.boot.study.common.Constants;
 import com.spring.boot.study.common.utils.SendSmsUtils;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.RegisterVo;
+import com.spring.boot.study.service.LoginService;
 import com.spring.boot.study.service.RegisterService;
 import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +31,7 @@ public class RegisterController {
     @Autowired
     private SendSmsUtils sendSmsUtils;
     @Autowired
-    private JedisService jedisService;
+    private LoginService loginService;
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -50,11 +51,16 @@ public class RegisterController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/get/validate/code/noLogin", method = RequestMethod.POST)
+    @RequestMapping(value = "/get/message/code/noLogin", method = RequestMethod.POST)
     public Map<String, Object> getValidateCode(String mobile, HttpServletRequest request) throws IOException {
         Map<String, Object> result = new HashMap<>();
         if(StringUtils.isBlank(mobile)) {
             result.put(Constants.MESSAGE, "手机号为空");
+            return result;
+        }
+        SysUser user = loginService.getSysUserByMobile(mobile);
+        if(user == null) {
+            result.put(Constants.MESSAGE, "手机号不存在");
             return result;
         }
         try {

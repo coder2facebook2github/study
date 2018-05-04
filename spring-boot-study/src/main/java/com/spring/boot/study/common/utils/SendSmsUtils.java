@@ -22,6 +22,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -36,14 +37,18 @@ public class SendSmsUtils {
 
     @Autowired
     private JedisService jedisService;
-    private String messageContent = "您的验证码是: $code，10分钟内有效，请勿泄露";
+    private String messageContent = "您的验证码是: $code，$timeout分钟内有效，请勿泄露";
+    // 验证码 有效期
+    @Value("${token.message.timeout}")
+    private Integer timeout;
 
     public void sendValidateCode(String mobile) throws ClientException {
 //        this.sendMessage(mobile, Constants.SIGN_NAME, Constants.IDENTIFY_TEMPLATE_CODE, getRandomCode(6));
         String code = getRandomCode(6);
-        boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code));
+        boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code)
+                .replace("$timeout", String.valueOf(timeout / 60)));
         if(sendSuccess) {
-            jedisService.setStr(Constants.MESSAGE_CODE + mobile, code, 600);
+            jedisService.setStr(Constants.MESSAGE_CODE + mobile, code, timeout);
             System.out.println("mobile: " + mobile + ", code: " + code);
         }
     }

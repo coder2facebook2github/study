@@ -24,6 +24,9 @@ pagehelper:
 token:
     #登陆 token 有效时间 24 * 3600
     timeout: 86400
+    message:
+        #手机验证码有效期
+        timeout: 600
     image:
         #图片验证码有效期 10 * 60
         timeout: 600
