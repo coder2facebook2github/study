@@ -41,9 +41,9 @@ public class LoginController {
         if("home".equals(env) || "company".equals(env)) {
             return "login";
         }
-        if("aliyun".equals(env)) {
-            return "redirect:welcome";
-        }
+//        if("aliyun".equals(env)) {
+//            return "redirect:welcome";
+//        }
         return "";
     }
 
