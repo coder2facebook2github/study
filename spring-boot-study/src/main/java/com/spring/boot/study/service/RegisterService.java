@@ -30,6 +30,13 @@ public class RegisterService {
         return sysUserDao.insertSelective(user);
     }
 
+    public int changePassword(String mobile, String password) {
+        SysUser user = sysUserDao.getByMobile(mobile);
+        String userPassword = DigestUtils.md5Hex(password + user.getSalt());
+        user.setPassword(userPassword);
+        return sysUserDao.updateByPrimaryKeySelective(user);
+    }
+
     public boolean checkValidateCode(String mobile, String code) {
         try {
 //            if(true) {

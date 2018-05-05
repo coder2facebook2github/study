@@ -216,6 +216,7 @@
                     <include>**/*.xml</include>
                     <include>static/**</include>
                     <include>image/**</include>
+                    <include>photos/**</include>
                     <include>templates/**</include>
                 </includes>
             </resource>

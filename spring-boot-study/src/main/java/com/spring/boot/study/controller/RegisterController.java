@@ -3,6 +3,7 @@ package com.spring.boot.study.controller;
 
 import com.aliyuncs.exceptions.ClientException;
 import com.spring.boot.study.common.Constants;
+import com.spring.boot.study.common.exception.BootStudyException;
 import com.spring.boot.study.common.utils.SendSmsUtils;
 import com.spring.boot.study.model.master.SysUser;
 import com.spring.boot.study.model.master.vo.RegisterVo;
@@ -12,11 +13,13 @@ import com.utils.JedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -32,6 +35,8 @@ public class RegisterController {
     private SendSmsUtils sendSmsUtils;
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private JedisService jedisService;
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -70,5 +75,27 @@ public class RegisterController {
         }
         result.put(Constants.MESSAGE, Constants.SUCCESS);
         return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/valid/message/code/noLogin", method = RequestMethod.POST)
+    public Map<String, Object> validMessageCode(String mobile, String code) {
+        Map<String, Object> result = new HashMap<>();
+        String redisCode = jedisService.getStr(Constants.MESSAGE_CODE + mobile);
+        if(StringUtils.isBlank(redisCode) || !redisCode.equals(code)) {
+            result.put("error", "验证码错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/change/password/noLogin", method = RequestMethod.POST)
+    public String changePassword(String mobile, String password, String code, RedirectAttributes redirectAttributes) {
+        String redisCode = jedisService.getStr(Constants.MESSAGE_CODE + mobile);
+        if(StringUtils.isBlank(redisCode) || !redisCode.equals(code)) {
+            throw new BootStudyException("验证码错误");
+        }
+        registerService.changePassword(mobile, password);
+        redirectAttributes.addFlashAttribute("mobile", mobile);
+        return "redirect:/";
     }
 }

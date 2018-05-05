@@ -47,7 +47,7 @@ public class SendSmsUtils {
         String code = getRandomCode(6);
         boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code)
                 .replace("$timeout", String.valueOf(timeout / 60)));
-        if(sendSuccess) {
+        if(true) {
             jedisService.setStr(Constants.MESSAGE_CODE + mobile, code, timeout);
             System.out.println("mobile: " + mobile + ", code: " + code);
         }

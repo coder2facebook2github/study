@@ -7,6 +7,8 @@ import com.spring.boot.study.service.LoginService;
 import com.utils.JedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +49,19 @@ public class ImageValidController {
         ServletOutputStream outputStream;
         outputStream = response.getOutputStream();
         ImageIO.write(randomImage.getImage(), "jpg", outputStream);
+        outputStream.close();
+    }
+
+    @RequestMapping(value = "/get/image/noLogin", method = RequestMethod.GET)
+    public void getImage(HttpServletResponse response) throws IOException {
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", -1);
+        response.setContentType("image/jpeg");
+        ServletOutputStream outputStream;
+        outputStream = response.getOutputStream();
+        BufferedImage image = ImageIO.read(new ClassPathResource("photos/1.jpg").getInputStream());
+        ImageIO.write(image, "jpg", outputStream);
         outputStream.close();
     }
 

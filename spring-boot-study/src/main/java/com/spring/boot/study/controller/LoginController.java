@@ -71,7 +71,7 @@ public class LoginController {
         jedisService.del(Constants.IMAGE_TOKEN + loginVo.getToken());
         System.out.println("=======token: " + token);
         model.addAttribute("authToken", token);
-        return "retrievePassword";
+        return "photos";
     }
 
     @ResponseBody
@@ -103,5 +103,7 @@ public class LoginController {
         model.addAttribute("token", token);
         return "retrievePassword";
     }
+
+
 
 }

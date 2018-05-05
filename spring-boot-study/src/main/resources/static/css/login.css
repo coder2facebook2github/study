@@ -67,5 +67,5 @@ body {
 }
 .getMsgCode {
     position: relative;
-    bottom: 3px;
+    top: 3px;
 }

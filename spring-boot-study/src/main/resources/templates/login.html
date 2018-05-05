@@ -10,7 +10,7 @@
          alt="" width="72" height="72">
     <h1 class="h3 font-weight-normal">Please sign in</h1>
     <label for="mobile" class="sr-only">mobile</label>
-    <input type="tel" id="mobile" name="username" class="form-control" placeholder="手机号"
+    <input type="tel" id="mobile" th:value="${mobile}" name="username" class="form-control" placeholder="手机号"
            data-rule="手机号:required;mobile;checkMobileExist">
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="password" class="form-control" placeholder="密码"
