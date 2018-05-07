@@ -69,3 +69,6 @@ body {
     position: relative;
     top: 3px;
 }
+.forget-password {
+    text-decoration:none;
+}

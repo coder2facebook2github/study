@@ -45,8 +45,8 @@ public class SendSmsUtils {
     public void sendValidateCode(String mobile) throws ClientException {
 //        this.sendMessage(mobile, Constants.SIGN_NAME, Constants.IDENTIFY_TEMPLATE_CODE, getRandomCode(6));
         String code = getRandomCode(6);
-        boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code)
-                .replace("$timeout", String.valueOf(timeout / 60)));
+//        boolean sendSuccess = this.sendMessage(mobile, messageContent.replace("$code", code)
+//                .replace("$timeout", String.valueOf(timeout / 60)));
         if(true) {
             jedisService.setStr(Constants.MESSAGE_CODE + mobile, code, timeout);
             System.out.println("mobile: " + mobile + ", code: " + code);

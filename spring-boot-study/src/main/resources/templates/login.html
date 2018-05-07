@@ -34,7 +34,7 @@
         </label>
     </div>-->
     <button type="submit" class="btn btn-lg btn-primary btn-block submit">Sign in</button>
-    <div class="mb-3">
+    <div class="mb-3 forget-password">
         <a href="/forget/password/noLogin">忘记密码？</a>
     </div>
     <p class="mt-5 text-muted">&copy; 2017-2018</p>
@@ -46,25 +46,35 @@
         $("#login-form").validator({
             rules: {
                 checkMobileExist: function(element) {
-                    return $.ajax({
+                    var checkMobileResult = "";
+                    $.ajax({
                         url: '/check/mobile/exist/noLogin',
                         type: 'post',
                         async: false,
                         dataType: 'json',
-                        data: {mobile: $(element).val()}
+                        data: {mobile: $(element).val()},
+                        success: function(result) {
+                            checkMobileResult = result;
+                        }
                     });
+                    return checkMobileResult;
                 },
                 checkPassword: function(element) {
-                    return $.ajax({
+                    var checkPasswordResult = "";
+                    $.ajax({
                         url: '/check/password/noLogin',
                         type: 'post',
                         dataType: 'json',
                         async: false,
-                        data: {password: $(element).val(), mobile: $("#mobile").val()}
+                        data: {password: $(element).val(), mobile: $("#mobile").val()},
+                        success: function(result) {
+                            checkPasswordResult = result;
+                        }
                     });
+                    return checkPasswordResult;
                 },
                 checkImageCode: function(element) {
-                    var checkResult = "";
+                    var checkImageResult = "";
                     $.ajax({
                         url: '/valid/image/code/noLogin',
                         type: 'post',
@@ -72,10 +82,10 @@
                         async: false,
                         data: {code: $(element).val(), token: $("#token").val()},
                         success: function(result) {
-                            checkResult = result;
+                            checkImageResult = result;
                         }
                     });
-                    return checkResult;
+                    return checkImageResult;
                 }
             },
             valid: function($form) {
